@@ -1,0 +1,42 @@
+{
+  "name": "content-editor",
+  "version": "0.0.1",
+  "devDependencies": {
+    "autoprefixer-core": "^5.2.1",
+    "babel": "^5.8.21",
+    "babel-core": "^5.8.21",
+    "babel-loader": "^5.3.2",
+    "chai": "^2.1.2",
+    "css-loader": "^0.15.6",
+    "denodeify": "^1.2.1",
+    "file-loader": "^0.8.4",
+    "github-api": "michael/github",
+    "hjs-webpack": "^2.12.2",
+    "json-loader": "^0.5.2",
+    "mocha": "^2.2.1",
+    "postcss-loader": "^0.5.1",
+    "react": "^0.13.3",
+    "react-hot-loader": "^1.2.8",
+    "react-redux": "^0.6.0",
+    "reactive-router": "^0.4.1",
+    "redux": "^1.0.1",
+    "redux-devtools": "^1.0.2",
+    "redux-thunk": "^0.1.0",
+    "sinon": "^1.14.1",
+    "sinon-stub-promise": "^0.1.0",
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.1",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.11.0",
+    "webpack-dev-server": "^1.10.1",
+    "yeticss": "^7.0.3"
+  },
+  "scripts": {
+    "test": "mocha --compilers js:babel/register",
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "deploy": "npm run build && surge -p public --domain https://content-editor.surge.sh"
+  },
+  "author": "Max White <mushishi78@gmail.com>",
+  "license": "ISC"
+}

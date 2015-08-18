@@ -1,0 +1,31 @@
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: #34495E;
+}
+
+h1, h2, h3, h4 {
+  color: #2c3e50
+}
+
+input { border: 1px solid #CECECE; }
+
+button {
+  background: #34495e;
+  color: #fff;
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+textarea {
+	outline: none;
+}
+
+.flash { height: 1.7em; }
+.flash-enter { height: 0; }
+.flash-enter.flash-enter-active { height: 1.7em; }
+.flash-leave { height: 1.7em; }
+.flash-leave.flash-leave-active { height: 0; }
