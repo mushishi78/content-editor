@@ -4,22 +4,27 @@ import '../css/loader.css';
 import '../css/app.css';
 
 import 'babel/polyfill';
-import './polyfills';
-
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import React from 'react';
 import thunk from 'redux-thunk';
+import ReactiveRouter from 'reactive-router';
 
 import * as reducers from './reducers/index';
-import createRouter from './routes';
 import App from './components/app';
-import { login } from './actions/index';
+import { login, setLocation } from './actions/index';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
-createRouter(store);
+
+const router = ReactiveRouter({ '*': ({ path }) => store.dispatch(setLocation(path)) });
+store.subscribe(() => {
+	const location = store.getState().locations.current;
+  document.title = 'Content Editor ' + location;
+  router.setSilent(location);
+});
+
 store.dispatch(login());
 
 React.render((

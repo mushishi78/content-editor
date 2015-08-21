@@ -12,38 +12,20 @@ describe('login', function() {
         password = 'LemonPops';
 
   const githubRepos = [
-    {
-      name: 'Lazerly',
-      full_name: 'NeoDude/Lazerly',
-      owner: { login: 'NeoDude' },
-      stars: 2
-    },
-    {
-      name: 'fizl',
-      full_name: 'shck-plc/fizl',
-      owner: { login: 'shck-plc' },
-      stars: 12
-    }
+    { full_name: 'NeoDude/Lazerly', stars: 2 },
+    { full_name: 'shck-plc/fizl', stars: 12 }
   ];
 
   const parsedRepos = [
-    {
-      label: 'NeoDude/Lazerly',
-      location: { owner: 'NeoDude', repo: 'Lazerly' },
-      type: 'repo'
-    },
-    {
-      label: 'shck-plc/fizl',
-      location: { owner: 'shck-plc', repo: 'fizl' },
-      type: 'repo'
-    }
+    { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+    { label: 'shck-plc/fizl', location: '/shck-plc/fizl', type: 'repo' }
   ];
 
   beforeEach(function() {
     this.dispatch = sinon.spy();
-    this.load = sinon.stub().returns('load');
+    this.load = () => 'load';
     this.github = { repos: sinon.stub().returnsPromise() };
-    this.GHPromiser = sinon.stub().returns(this.github);
+    this.GHPromiser = sinon.stub().withArgs(username, password).returns(this.github);
     this.storage = { getItem: sinon.stub(), setItem: sinon.spy() };
   });
 

@@ -1,18 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setLocation } from '../actions/index';
 
-class ListViewer extends React.Component {
+class ContentsViewer extends React.Component {
   render() {
-    return !this.props.list ? null :
+    return !this.props.contents ? null :
       <ul style={styles.ul}>
         {
-          this.props.list.map(({ label, location, type }) => {
+          this.props.contents.map(({ label, location, type }) => {
             return (
               <li style={styles.li} key={label}>
-                <a onClick={this.props.setLocation.bind(null, location)}
-                   style={styles.a}
-                   href='javascript:void(0)'>
+                <a style={styles.a} href={location}>
                   <i style={styles.icon} className={'octicon octicon-' + icon(type)} />
                   {label}
                 </a>
@@ -51,12 +48,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ list }) {
-  return { list };
+function mapStateToProps({ locations }) {
+  return { contents: locations[locations.current] };
 }
 
-function mapDispatchToProps(dispatch) {
-  return { setLocation: (location) => { dispatch(setLocation(location)); } };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListViewer);
+export default connect(mapStateToProps, null)(ContentsViewer);

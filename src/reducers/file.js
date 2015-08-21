@@ -1,15 +1,10 @@
-import { LOAD, SET_CONTENT, LOGOUT } from '../constants/action-types';
+import { LOAD, SET_TEXT, SET_LOCATION } from '../constants/action-types';
 
-export default function file(state = null, { type, file, content }) {
+export default function file(state = null, { type, file, text }) {
 	switch (type) {
-    case LOAD:
-      return file || null;
-    case SET_CONTENT:
-      return { ...state, content }
-    case LOGOUT:
-      return null;
-    default:
-      return state;
+    case LOAD: return file || null;
+    case SET_TEXT: return { ...state, text };
+    case SET_LOCATION: return null;
+    default: return state;
   }
 }
-

@@ -2,7 +2,7 @@ import _GHPromiser from '../gh-promiser';
 import { LOGIN } from '../constants/action-types';
 import { INITIATED, COMPLETED, FAILED } from '../constants/status-types';
 import _load from './load';
-import failed from '../failed';
+import { failed } from '../utils';
 
 export default function login({ username, password } = {}, GHPromiser = _GHPromiser, load = _load, storage = localStorage) {
   return dispatch => {
@@ -11,6 +11,7 @@ export default function login({ username, password } = {}, GHPromiser = _GHPromi
 
     if(username && password) {
       dispatch({ type: LOGIN, status: INITIATED });
+
       const github = GHPromiser(username, password);
       github.repos().then(completed(dispatch, github, load)).catch(failed(dispatch, LOGIN));
     }
@@ -32,6 +33,6 @@ function completed(dispatch, github, load) {
   };
 }
 
-function parseRepo({ name, full_name, owner: { login } }) {
-  return { label: full_name, location: { owner: login, repo: name }, type: 'repo' };
+function parseRepo({ full_name }) {
+  return { label: full_name, location: '/' + full_name, type: 'repo' };
 }

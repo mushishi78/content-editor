@@ -1,76 +1,58 @@
 import { LOAD } from '../constants/action-types';
 import { INITIATED, COMPLETED } from '../constants/status-types';
-import { atob as _atob } from '../atob';
-import failed from '../failed';
+import { atob as _atob, failed, isArray } from '../utils';
 
 export default function load(atob = _atob) {
   return (dispatch, getState) => {
-    const { location, github, repos } = getState();
+    const { locations, locations: { current }, github } = getState();
+    if(locations[current]) { return; }
     dispatch({ type: LOAD, status: INITIATED });
-    getMethod(location)(dispatch, location, github, repos, atob).catch(failed(dispatch, LOAD));
+    getMethod(current)(dispatch, current, github, atob).catch(failed(dispatch, LOAD));
   }
 }
 
 function getMethod(location) {
-  if(location.verb)   { return createFile; }
-  if(location.branch) { return getContents; }
-  if(location.repo)   { return getBranches; }
-  if(location.owner)  { return getOwnersRepos; }
-  return getRepos;
+  switch(location.split('/').length) {
+    case 3:  return getBranches;
+    case 2:  return getOwnersRepos;
+    default: return getContents;
+  }
 }
 
-function createFile(dispatch, { path }) {
-  dispatch({ type: LOAD, status: COMPLETED, file: { name: toName(path) } });
-  return ignoreCatch();
-}
-
-function getContents(dispatch, location, github, _, atob) {
+function getContents(dispatch, location, github, atob) {
   return github.contents(location).then(contents => {
-    Array.isArray(contents) ?
-      setList(dispatch, parseFolder)(contents) :
+    isArray(contents) ?
+      setContents(dispatch, parseFolder(location))(contents) :
       setFile(dispatch, contents, atob);
   });
 }
 
 function getBranches(dispatch, location, github) {
-  return github.listBranches(location).then(setList(dispatch, parseBranch));
+  return github.listBranches(location).then(setContents(dispatch, parseBranch(location)));
 }
 
 function getOwnersRepos(dispatch, location, github) {
   return github.userRepos(location).then(repos => {
     return repos.length === 0 ? github.orgRepos(location) : repos;
-  }).then(setList(dispatch, parseOwnerRepo));
+  }).then(setContents(dispatch, parseOwnerRepo));
 }
 
-function getRepos(dispatch, location, github, repos) {
-  dispatch({ type: LOAD, status: COMPLETED, list: repos });
-  return ignoreCatch();
-}
-
-function setList(dispatch, parse) {
-  return list => { dispatch({ type: LOAD, status: COMPLETED, list: list.map(parse) }); }
+function setContents(dispatch, parse) {
+  return contents => dispatch({ type: LOAD, status: COMPLETED, contents: contents.map(parse) });
 }
 
 function setFile(dispatch, { name, content }, atob) {
-  dispatch({ type: LOAD, status: COMPLETED, file: { name, content: atob(content) } });
+  dispatch({ type: LOAD, status: COMPLETED, file: { name, text: atob(content) } });
 }
 
-function parseBranch(branch) {
-  return { label: branch, location: { branch: branch}, type: 'branch' };
+function parseBranch(location) {
+  return branch => ({ label: branch, location: location + '/' + branch, type: 'branch' });
 }
 
-function parseFolder({ name, path, type }) {
-  return { label: name, location: { path }, type };
+function parseFolder(location) {
+  return ({ name, type }) => ({ label: name, location: location + '/' + name, type });
 }
 
-function parseOwnerRepo({ name, owner: { login } }) {
-  return { label: name, location: { owner: login, repo: name }, type: 'repo' };
-}
-
-function toName(path = '') {
-  return path.split('/').slice(-1)[0];
-}
-
-function ignoreCatch() {
-  return { "catch": () => {} };
+function parseOwnerRepo({ name, full_name }) {
+  return { label: name, location: '/' + full_name, type: 'repo' };
 }

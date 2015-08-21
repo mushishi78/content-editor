@@ -5,7 +5,7 @@ import LoginModal from '../components/login-modal';
 import LogoutButton from '../components/logout-button';
 import Breadcrumbs from '../components/breadcrumbs';
 import FlashMessage from '../components/flash-message';
-import ListViewer from '../components/list-viewer';
+import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ class App extends React.Component {
             this.props.status.type !== INITIATED ?
               <div>
                 <LoginModal />
-                <ListViewer />
+                <ContentsViewer />
                 <FileEditor />
               </div> :
               <div className='loader' />

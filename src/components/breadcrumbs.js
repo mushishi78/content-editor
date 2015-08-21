@@ -1,58 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setLocation } from '../actions/index';
 
 class Breadcrumbs extends React.Component {
-  pathMap(path, callback) {
-    return (path || '').split('/').map((section, i, sections) => {
-      return callback(section, sections.slice(0, i + 1).join('/'), i);
-    });
-  }
-
   render() {
-    const { owner, repo, branch, path } = this.props.location;
+    const links = this.links();
 
     return (
       <nav style={styles.nav}>
-        {this.link(<i style={styles.icon} className='octicon octicon-home' />, {})}
-        {
-          !owner ? null :
-            <span style={styles.span}>
-              <i style={styles.icon} className='octicon octicon-repo' />
-              {this.link(owner, { owner })}/{this.link(repo, { repo })}
-            </span>
-        }
-
-        {
-          !branch ? null :
-            <span style={styles.span}>
-              <i style={styles.icon} className='octicon octicon-git-branch' />
-              {this.link(branch, { branch })}
-            </span>
-        }
-
-        {
-          !path ? null :
-          <span style={styles.span}>
-            <i style={styles.icon} className='octicon octicon-file-directory' />
-            {
-              this.pathMap(path || '', (label, subPath, i) => {
-                return <span>
-                        {this.link(label, { path: subPath })}
-                        {subPath == path ? null : '/'}
-                       </span>;
-              })
-            }
-          </span>
-        }
+        <a href='/' style={styles.a}>
+          <i style={styles.icon} className='octicon octicon-home' />
+        </a>
+        {this.section(links.slice(1, 3), 'repo')}
+        {this.section(links.slice(3, 4), 'git-branch')}
+        {this.section(links.slice(4, links.length), 'file-directory')}
       </nav>
     );
   }
 
-  link(label, location) {
-    return <a onClick={this.props.setLocation.bind(null, location)}
-              style={styles.a}
-              href='javascript:void(0)'>{label}</a>;
+  links() {
+    return this.props.location.split('/').map((label, i, array) => {
+      return !label ? null :
+        <a href={array.slice(0, i + 1).join('/')} style={styles.a}>{label}</a>;
+    });
+  }
+
+  section(links, icon) {
+    return !links[0] ? null :
+      <span style={styles.span}>
+        <i style={styles.icon} className={'octicon octicon-' + icon} />
+        {links.map((link, i) => <span>{link}{ i < links.length - 1 ? '/' : '' }</span>)}
+      </span>;
   }
 }
 
@@ -80,12 +57,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ location }) {
-  return { location };
+function mapStateToProps({ locations: { current } }) {
+  return { location: current };
 }
 
-function mapDispatchToProps(dispatch) {
-  return { setLocation: (location) => { dispatch(setLocation(location)); } };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumbs);
+export default connect(mapStateToProps, null)(Breadcrumbs);

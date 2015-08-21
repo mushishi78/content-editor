@@ -5,40 +5,29 @@ import { SET_LOCATION } from '../../src/constants/action-types';
 
 describe('setLocation', function() {
   beforeEach(function() {
-    this.getState = sinon.stub();
     this.dispatch = sinon.spy();
-    this.load = sinon.stub().returns('load');
+    this.load = () => 'load';
+    this.loggedIn = true;
+    this.getState = () => ({
+      locations: { current: '/dgaer58/friKtion' },
+      loggedIn: this.loggedIn
+    });
   });
 
-  it('dispatches nothing if location has not changed', function() {
-    let location = { owner: 'dgaer58', repo: 'friKtion' };
-    let previous = { owner: 'dgaer58', repo: 'friKtion' };
-    this.getState.returns({ location: previous, loggedIn: true });
-  	setLocation(location, this.load)(this.dispatch, this.getState);
+  it('dispatches nothing if location unchanged', function() {
+  	setLocation('/dgaer58/friKtion', this.load)(this.dispatch, this.getState);
   	assert(this.dispatch.notCalled);
   });
 
-  it('fills missing location parts from previous and dispatches, calling load if logged in', function() {
-    let location = { owner: 'js8on', branch: 'master' };
-    let previous = {
-      owner: 'dgaer58',
-      repo: 'friKtion',
-      branch: 'master',
-      path: 'lib/run.rb'
-    };
-
-    this.getState.returns({ location: previous, loggedIn: true });
-    setLocation(location, this.load)(this.dispatch, this.getState);
-
-    let expected = { type: SET_LOCATION, repo: 'friKtion', ...location };
-    assert.deepEqual(this.dispatch.args[0][0], expected);
+  it('dispatches and calls load if logged in', function() {
+    setLocation('/js8on/master', this.load)(this.dispatch, this.getState);
+    assert.deepEqual(this.dispatch.args[0][0], { type: SET_LOCATION, location: '/js8on/master' });
     assert.equal(this.dispatch.args[1][0], 'load');
   });
 
   it('dispatches without calling load if logged out', function() {
-    let location = { owner: 'js8on', repo: 'friKtion' };
-    this.getState.returns({ location: {}, loggedIn: false });
-    setLocation(location, this.load)(this.dispatch, this.getState);
+    this.loggedIn = false;
+    setLocation('/js8on/master', this.load)(this.dispatch, this.getState);
     assert(this.dispatch.calledOnce);
   });
 });

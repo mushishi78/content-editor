@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { save, setContent } from '../actions/index';
+import { save, setText } from '../actions/index';
 
 class FileEditor extends React.Component {
-  setContent(e) { this.props.setContent(e.target.value); }
+  setText(e) { this.props.setText(e.target.value); }
   setComment(e) { this.setState({ comment: e.target.value }); }
   save() { this.props.save(this.state && this.state.comment); }
   render() {
@@ -13,19 +13,37 @@ class FileEditor extends React.Component {
           {this.props.file.name}
         </header>
 
-        <textarea style={styles.content}
-                  defaultValue={this.props.file.content}
-                  onChange={this.setContent.bind(this)} />
+        <textarea style={this.textStyles()}
+                  defaultValue={this.props.file.text}
+                  onChange={this.setText.bind(this)}
+                  disabled={!this.props.permissions.write} />
+        {
+          !this.props.permissions.write ? null :
+            <span>
+              <textarea style={styles.comment}
+                        placeholder='Describe the changes you have made...'
+                        onChange={this.setComment.bind(this)} />
 
-        <textarea style={styles.comment}
-                  placeholder='Describe the changes you have made...'
-                  onChange={this.setComment.bind(this)} />
-
-        <button style={styles.button}
-                onClick={this.save.bind(this)}>
-          Commit Changes
-        </button>
+              <button style={styles.button}
+                      onClick={this.save.bind(this)}>
+                Commit Changes
+              </button>
+            </span>
+        }
       </div>;
+  }
+
+  textStyles() {
+    return {
+      width: '90%',
+      margin: '20px 2.5% 5px',
+      height: this.props.permissions.write ? '24em' : '29.5em',
+      border: '#34495E',
+      padding: '2.5%',
+      fontSize: '1.3em',
+      fontFamily: 'Roboto Mono',
+      color: '#333'
+    };
   }
 }
 
@@ -35,16 +53,6 @@ const styles = {
     background: '#16a085',
     color: '#fff',
     fontSize: '2em'
-  },
-  content: {
-    width: '90%',
-    margin: '20px 2.5% 5px',
-    height: '24em',
-    border: '#34495E',
-    padding: '2.5%',
-    fontSize: '1.3em',
-    fontFamily: 'Roboto Mono',
-    color: '#333'
   },
   comment: {
     width: '90%',
@@ -63,13 +71,13 @@ const styles = {
   }
 }
 
-function mapStateToProps({ file }) {
-  return { file };
+function mapStateToProps({ file, permissions }) {
+  return { file, permissions };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setContent: content => { dispatch(setContent(content)); },
+    setText: text => { dispatch(setText(text)); },
     save: comment => { dispatch(save(comment)); }
   };
 }
