@@ -37,15 +37,15 @@ const styles = {
   section: {
     position: 'absolute',
     zIndex: '2',
-    margin: '15% 35%',
+    margin: '20% 35%',
     padding: '2%',
-    boxShadow: '0 0 1px 1px #7f8c8d',
-    background: '#bdc3c7'
+    background: '#ecf0f1',
+    borderRadius: '10px',
+    fontSize: '1.4em'
   },
 
   heading: {
     textAlign: 'center',
-    fontSize: '3em',
     margin: '0.1em'
   },
 
@@ -53,8 +53,8 @@ const styles = {
     width: '100%',
     padding: '0.5em 0',
     margin: '0.5em 0',
-    fontSize: '1.1em',
-    textAlign: 'center'
+    textAlign: 'center',
+    borderRadius: '5px'
   }
 }
 

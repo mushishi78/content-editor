@@ -2,34 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { INITIATED } from '../constants/status-types';
 import LoginModal from '../components/login-modal';
-import LogoutButton from '../components/logout-button';
-import Breadcrumbs from '../components/breadcrumbs';
+import TopBar from '../components/top-bar';
 import FlashMessage from '../components/flash-message';
 import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
+import SaveBar from '../components/save-bar';
 
 class App extends React.Component {
   render() {
     return (
       <main>
-        <header style={ { background: '#fff' } }>
-          <LogoutButton />
-          <Breadcrumbs />
-        </header>
         <article>
-          <FlashMessage status={this.props.status} />
+          <header>
+            <TopBar />
+            <FlashMessage status={this.props.status} />
+          </header>
           {
             this.props.status.type !== INITIATED ?
-              <div>
+              <section>
                 <LoginModal />
                 <ContentsViewer />
                 <FileEditor />
-              </div> :
+              </section> :
               <div className='loader' />
           }
         </article>
+        <footer style={styles.footer}>
+          <SaveBar />
+        </footer>
       </main>
     );
+  }
+}
+
+const styles = {
+  footer: {
+    position: 'fixed',
+    bottom: '0',
+    width: '100%'
   }
 }
 

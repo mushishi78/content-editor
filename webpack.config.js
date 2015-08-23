@@ -24,7 +24,7 @@ function html(data) {
     "<meta name='viewport' content='width=device-width, initial-scale=1'>",
     "<meta name='description' content='Content Editor for Static-Sites hosted on GitHub'>",
     "<title>Content Editor</title>",
-    "<link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Rajdhani' rel='stylesheet' type='text/css'>",
+    "<link href='https://fonts.googleapis.com/css?family=Ubuntu|Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>",
     "<link rel='stylesheet' href='" + sep + data.css + "'/>",
     "</head>",
     "<body>",

@@ -1,6 +1,6 @@
 body {
-  font-family: 'Rajdhani', sans-serif;
-  background: #34495E;
+  background: #3498db;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 h1, h2, h3, h4 {
@@ -10,7 +10,7 @@ h1, h2, h3, h4 {
 input { border: 1px solid #CECECE; }
 
 button {
-  background: #34495e;
+  background: #1abc9c;
   color: #fff;
   border: none;
   outline: none;
@@ -21,7 +21,13 @@ a {
 }
 
 textarea {
-	outline: none;
+  outline: none;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.breadcrumb { display: block; }
+@media (min-width: 700px) {
+  .breadcrumb { display: inline-block; }
 }
 
 .flash { height: 1.7em; }
@@ -29,3 +35,9 @@ textarea {
 .flash-enter.flash-enter-active { height: 1.7em; }
 .flash-leave { height: 1.7em; }
 .flash-leave.flash-leave-active { height: 0; }
+
+.save-bar { top: 0; }
+.save-bar-enter { top: 100px; }
+.save-bar-enter.save-bar-enter-active { top: 0; }
+.save-bar-leave { top: 0; }
+.save-bar-leave.save-bar-leave-active { top: 100px; }

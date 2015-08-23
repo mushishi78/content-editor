@@ -15,5 +15,5 @@ export default function save(comment) {
 }
 
 function completed(dispatch) {
-  return () => dispatch({ type: SAVE, status: COMPLETED, flash: 'Saved!' });
+  return () => dispatch({ type: SAVE, status: COMPLETED });
 }

@@ -26,7 +26,7 @@ describe('save', function() {
   it('writes and dispatches complete', function() {
     this.github.write.resolves();
     save(comment)(this.dispatch, this.getState);
-    assert.deepEqual(this.dispatch.args[1][0], { type: SAVE, status: COMPLETED, flash: 'Saved!' });
+    assert.deepEqual(this.dispatch.args[1][0], { type: SAVE, status: COMPLETED });
   });
 
   it('dispatches failed when github fails', function() {
