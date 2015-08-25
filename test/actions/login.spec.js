@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import login from '../../src/actions/login';
 import { LOGIN } from '../../src/constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
 
 sinonStubPromise(sinon);
 
@@ -51,7 +51,7 @@ describe('login', function() {
 
     assert.deepEqual(this.storage.setItem.args[0], ['username', username]);
     assert.deepEqual(this.storage.setItem.args[1], ['password', password]);
-    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: INITIATED });
+    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
       type: LOGIN,
       status: COMPLETED,
@@ -68,7 +68,7 @@ describe('login', function() {
 
     login({}, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
-    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: INITIATED });
+    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
       type: LOGIN,
       status: COMPLETED,
@@ -82,7 +82,7 @@ describe('login', function() {
     this.github.repos.rejects({ request: { statusText: 'Not Authorized' } });
     login({ username, password}, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
-    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: INITIATED });
+    assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
       type: LOGIN, status: FAILED, flash: 'Not Authorized'
     });

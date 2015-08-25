@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../actions/index';
-import { INITIATED } from '../constants/status-types';
+import { IN_PROGRESS } from '../constants/status-types';
 
 class LoginModal extends React.Component {
   submit() { this.props.login(this.state); }

@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import locations from '../../src/reducers/locations';
 import { LOGIN, LOGOUT, SET_LOCATION, LOAD } from '../../src/constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
 
 describe('locations', function() {
   it("caches user's repos to root on login", function() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { INITIATED } from '../constants/status-types';
+import { IN_PROGRESS } from '../constants/status-types';
 import LoginModal from '../components/login-modal';
 import TopBar from '../components/top-bar';
 import FlashMessage from '../components/flash-message';
@@ -18,7 +18,7 @@ class App extends React.Component {
             <FlashMessage status={this.props.status} />
           </header>
           {
-            this.props.status.type !== INITIATED ?
+            this.props.status.type !== IN_PROGRESS ?
               <section>
                 <LoginModal />
                 <ContentsViewer />

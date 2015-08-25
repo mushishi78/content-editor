@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import load from '../../src/actions/load';
 import { LOAD } from '../../src/constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
 
 sinonStubPromise(sinon);
 
@@ -45,7 +45,7 @@ describe('load', function() {
 
     afterEach(function() {
       assert.equal(this.github.listBranches.args[0][0], this.state.locations.current);
-      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: INITIATED });
+      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
     it('dispatches list of branches if location is a repo', function() {
@@ -75,7 +75,7 @@ describe('load', function() {
 
     afterEach(function() {
       assert.equal(this.github.contents.args[0][0], this.state.locations.current);
-      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: INITIATED });
+      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
     it('dispatches file if location is a file', function() {
@@ -133,7 +133,7 @@ describe('load', function() {
 
     afterEach(function() {
       assert.equal(this.github.userRepos.args[0][0], this.state.locations.current);
-      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: INITIATED });
+      assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
     it('dispatches list of repos if location is an owner and owner is a user', function() {

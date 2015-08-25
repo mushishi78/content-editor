@@ -1,6 +1,6 @@
 import _GHPromiser from '../gh-promiser';
 import { LOGIN } from '../constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../constants/status-types';
 import _load from './load';
 import { failed } from '../utils';
 
@@ -10,7 +10,7 @@ export default function login({ username, password } = {}, GHPromiser = _GHPromi
     password = backup('password', password, storage);
 
     if(username && password) {
-      dispatch({ type: LOGIN, status: INITIATED });
+      dispatch({ type: LOGIN, status: IN_PROGRESS });
 
       const github = GHPromiser(username, password);
       github.repos().then(completed(dispatch, github, load)).catch(failed(dispatch, LOGIN));

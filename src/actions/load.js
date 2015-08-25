@@ -1,12 +1,12 @@
 import { LOAD } from '../constants/action-types';
-import { INITIATED, COMPLETED } from '../constants/status-types';
+import { IN_PROGRESS, COMPLETED } from '../constants/status-types';
 import { atob as _atob, failed, isArray } from '../utils';
 
 export default function load(atob = _atob) {
   return (dispatch, getState) => {
     const { locations, locations: { current }, github } = getState();
     if(locations[current]) { return; }
-    dispatch({ type: LOAD, status: INITIATED });
+    dispatch({ type: LOAD, status: IN_PROGRESS });
     getMethod(current)(dispatch, current, github, atob).catch(failed(dispatch, LOAD));
   }
 }

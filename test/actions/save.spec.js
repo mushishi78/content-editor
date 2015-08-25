@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import save from '../../src/actions/save';
 import { SAVE } from '../../src/constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
 
 sinonStubPromise(sinon);
 
@@ -20,7 +20,7 @@ describe('save', function() {
 
   afterEach(function() {
     assert(this.github.write.calledWith(locations.current, text, comment));
-    assert.deepEqual(this.dispatch.args[0][0], { type: SAVE, status: INITIATED });
+    assert.deepEqual(this.dispatch.args[0][0], { type: SAVE, status: IN_PROGRESS });
   })
 
   it('writes and dispatches complete', function() {

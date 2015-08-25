@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import permissions from '../../src/reducers/permissions';
 import { LOGIN, LOGOUT, SET_LOCATION } from '../../src/constants/action-types';
-import { INITIATED, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
 
 describe('permissions', function() {
   const repos = [
