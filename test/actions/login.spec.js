@@ -17,8 +17,8 @@ describe('login', function() {
   ];
 
   const parsedRepos = [
-    { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
-    { label: 'shck-plc/fizl', location: '/shck-plc/fizl', type: 'repo' }
+    { label: 'NeoDude/Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
+    { label: 'shck-plc/fizl', href: '/shck-plc/fizl', type: 'repo' }
   ];
 
   beforeEach(function() {

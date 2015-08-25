@@ -29,7 +29,7 @@ class TopBar extends React.Component {
   }
 
   breadcrumbs() {
-    return this.props.location.split('/').map((label, i, array) => {
+    return this.props.href.split('/').map((label, i, array) => {
       return !label ? null :
         <span className='breadcrumb'>
           <a href={array.slice(0, i + 1).join('/')} style={styles.a}>{label}</a>
@@ -63,8 +63,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ loggedIn, locations: { current } }) {
-  return { loggedIn, location: current };
+function mapStateToProps({ loggedIn, location: { href } }) {
+  return { loggedIn, href };
 }
 
 function mapDispatchToProps(dispatch) {

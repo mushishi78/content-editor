@@ -4,6 +4,7 @@ import sinonStubPromise from 'sinon-stub-promise';
 import load from '../../src/actions/load';
 import { LOAD } from '../../src/constants/action-types';
 import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types';
+import { OWNER, REPO, PATH } from '../../src/constants/location-types';
 
 sinonStubPromise(sinon);
 
@@ -15,24 +16,24 @@ describe('load', function() {
     this.dispatch = sinon.spy();
     this.github = {};
     this.atob = sinon.stub();
-    this.state = {
-      github: this.github,
-      locations: {
-        '/NeoDude/Lazerly/master': [
-          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
-          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
-        ],
-        '/': [
-          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
-          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
-        ]
-      }
-    };
+    this.location = {};
+    this.contents = {
+      '/NeoDude/Lazerly/master': [
+        { label: 'lib', href: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+        { label: 'app.rb', href: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+      ],
+      '/': [
+        { label: 'NeoDude/Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
+        { label: 'NeoDude/JzzT', href: '/NeoDude/JzzT', type: 'repo' }
+      ]
+    }
+    this.state = { github: this.github, location: this.location, contents: this.contents };
     this.getState = () => this.state;
   });
 
   it('ignores if contents already loaded', function() {
-    this.state.locations.current = '/NeoDude/Lazerly/master';
+    this.location.href = '/NeoDude/Lazerly/master';
+    this.location.type = PATH;
     load(this.atob)(this.dispatch, this.getState);
     assert(this.dispatch.notCalled);
   });
@@ -40,11 +41,12 @@ describe('load', function() {
   describe('listBranches', function() {
     beforeEach(function() {
       this.github.listBranches = sinon.stub().returnsPromise();
-      this.state.locations.current = '/NeoDude/Lazerly';
+      this.location.href = '/NeoDude/Lazerly';
+      this.location.type = REPO;
     });
 
     afterEach(function() {
-      assert.equal(this.github.listBranches.args[0][0], this.state.locations.current);
+      assert.deepEqual(this.github.listBranches.args[0][0], this.location);
       assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
@@ -54,9 +56,10 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
+        location: this.location,
         contents: [
-          { label: 'master',   location: '/NeoDude/Lazerly/master',   type: 'branch' },
-          { label: 'gh-pages', location: '/NeoDude/Lazerly/gh-pages', type: 'branch' }
+          { label: 'master',   href: '/NeoDude/Lazerly/master',   type: 'branch' },
+          { label: 'gh-pages', href: '/NeoDude/Lazerly/gh-pages', type: 'branch' }
         ]
       });
     });
@@ -71,15 +74,16 @@ describe('load', function() {
   describe('contents', function() {
     beforeEach(function() {
       this.github.contents = sinon.stub().returnsPromise();
+      this.location.type = PATH;
     });
 
     afterEach(function() {
-      assert.equal(this.github.contents.args[0][0], this.state.locations.current);
+      assert.deepEqual(this.github.contents.args[0][0], this.location);
       assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
     it('dispatches file if location is a file', function() {
-      this.state.locations.current = '/NeoDude/Lazerly/master/index.js';
+      this.location.href = '/NeoDude/Lazerly/master/index.js';
       this.atob.returns('console.log("Hello World");')
       this.github.contents.resolves({
         content: '08t24h8thw4iugw47gf74w8u2',
@@ -97,7 +101,7 @@ describe('load', function() {
     });
 
     it('dispatches list of files and folders if location is a folder', function() {
-      this.state.locations.current = '/NeoDude/Lazerly/master/lib';
+      this.location.href = '/NeoDude/Lazerly/master/lib';
       this.github.contents.resolves([
         { name: 'snap.c',  type: 'file', size: 93  },
         { name: 'crackle', type: 'dir',  size: 0   },
@@ -109,16 +113,17 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
+        location: this.location,
         contents: [
-          { label: 'snap.c',  location: '/NeoDude/Lazerly/master/lib/snap.c' , type: 'file' },
-          { label: 'crackle', location: '/NeoDude/Lazerly/master/lib/crackle', type: 'dir'  },
-          { label: '.pop',    location: '/NeoDude/Lazerly/master/lib/.pop',    type: 'file' }
+          { label: 'snap.c',  href: '/NeoDude/Lazerly/master/lib/snap.c' , type: 'file' },
+          { label: 'crackle', href: '/NeoDude/Lazerly/master/lib/crackle', type: 'dir'  },
+          { label: '.pop',    href: '/NeoDude/Lazerly/master/lib/.pop',    type: 'file' }
         ]
       });
     });
 
     it('dispatches fail if github fails', function() {
-      this.state.locations.current = '/NeoDude/Lazerly/master/index.j';
+      this.location.href = '/NeoDude/Lazerly/master/index.j';
       this.github.contents.rejects(failReply);
       load(this.atob)(this.dispatch, this.getState);
       assert.deepEqual(this.dispatch.args[1][0], failAction);
@@ -129,15 +134,16 @@ describe('load', function() {
     beforeEach(function() {
       this.github.userRepos = sinon.stub().returnsPromise();
       this.github.orgRepos  = sinon.stub().returnsPromise();
+      this.location.type = OWNER;
     });
 
     afterEach(function() {
-      assert.equal(this.github.userRepos.args[0][0], this.state.locations.current);
+      assert.deepEqual(this.github.userRepos.args[0][0], this.location);
       assert.deepEqual(this.dispatch.args[0][0], { type: LOAD, status: IN_PROGRESS });
     });
 
     it('dispatches list of repos if location is an owner and owner is a user', function() {
-      this.state.locations.current = '/NeoDude';
+      this.location.href = '/NeoDude';
       this.github.userRepos.resolves([
         { name: 'Lazerly', full_name: 'NeoDude/Lazerly', stars: 2 },
         { name: 'fish-js', full_name: 'NeoDude/fish-js', stars: 5 }
@@ -148,15 +154,16 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
+        location: this.location,
         contents: [
-          { label: 'Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
-          { label: 'fish-js', location: '/NeoDude/fish-js', type: 'repo' }
+          { label: 'Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'fish-js', href: '/NeoDude/fish-js', type: 'repo' }
         ]
       });
     });
 
     it('dispatches list of repos if location is an owner and owner is a org', function() {
-      this.state.locations.current = '/shck-plc';
+      this.location.href = '/shck-plc';
       this.github.userRepos.resolves([]);
       this.github.orgRepos.resolves([
         { name: 'fizl', full_name: 'shck-plc/fizl', stars: 12 },
@@ -165,19 +172,20 @@ describe('load', function() {
 
       load(this.atob)(this.dispatch, this.getState);
 
-      assert.equal(this.github.orgRepos.args[0][0], '/shck-plc');
+      assert.deepEqual(this.github.orgRepos.args[0][0], this.location);
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
+        location: this.location,
         contents: [
-          { label: 'fizl', location: '/shck-plc/fizl', type: 'repo' },
-          { label: 'lift', location: '/shck-plc/lift', type: 'repo' }
+          { label: 'fizl', href: '/shck-plc/fizl', type: 'repo' },
+          { label: 'lift', href: '/shck-plc/lift', type: 'repo' }
         ]
       });
     });
 
     it('dispatches fail if github fails', function() {
-      this.state.locations.current = '/shck-plc';
+      this.location.href = '/shck-plc';
       this.github.userRepos.rejects(failReply);
       load(this.atob)(this.dispatch, this.getState);
       assert.deepEqual(this.dispatch.args[1][0], failAction);

@@ -34,5 +34,5 @@ function completed(dispatch, github, load) {
 }
 
 function parseRepo({ full_name }) {
-  return { label: full_name, location: '/' + full_name, type: 'repo' };
+  return { label: full_name, href: '/' + full_name, type: 'repo' };
 }

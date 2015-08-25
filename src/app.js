@@ -20,9 +20,9 @@ const store = createStoreWithMiddleware(reducer);
 
 const router = ReactiveRouter({ '*': ({ path }) => store.dispatch(setLocation(path)) });
 store.subscribe(() => {
-	const location = store.getState().locations.current;
-  document.title = 'Content Editor ' + location;
-  router.setSilent(location);
+	const href = store.getState().location.href;
+  document.title = 'Content Editor ' + href;
+  router.setSilent(href);
 });
 
 store.dispatch(login());

@@ -10,10 +10,10 @@ class ContentsViewer extends React.Component {
     return !this.props.contents ? null :
       <ul style={styles.ul}>
         {
-          this.props.contents.sort(this.order).map(({ label, location, type }) => {
+          this.props.contents.sort(this.order).map(({ label, href, type }) => {
             return (
               <li style={styles.li} key={label} className='two-columns'>
-                <a style={styles.a} href={location}>
+                <a style={styles.a} href={href}>
                   <i style={styles.icon} className={'octicon octicon-' + icon(type)} />
                   <span style={styles.span}>{label}</span>
                 </a>
@@ -64,8 +64,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ locations }) {
-  return { contents: locations[locations.current] };
+function mapStateToProps({ contents, location }) {
+  return { contents: contents[location.href] };
 }
 
 export default connect(mapStateToProps, null)(ContentsViewer);

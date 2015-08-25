@@ -6,8 +6,8 @@ import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types
 
 describe('permissions', function() {
   const repos = [
-    { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
-    { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+    { label: 'NeoDude/Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
+    { label: 'NeoDude/JzzT', href: '/NeoDude/JzzT', type: 'repo' }
   ];
 
   describe('LOGIN', function() {
@@ -62,7 +62,7 @@ describe('permissions', function() {
   describe('SET_LOCATION', function() {
     it("extracts repo from location and grants write permission if user's repo", function() {
       let state = { repos: ['/NeoDude/Lazerly', '/NeoDude/JzzT'], write: false };
-      let action = { type: SET_LOCATION, location: '/NeoDude/Lazerly/master/app.rb' };
+      let action = { type: SET_LOCATION, href: '/NeoDude/Lazerly/master/app.rb' };
       let expected = {
         repo: '/NeoDude/Lazerly',
         repos: ['/NeoDude/Lazerly', '/NeoDude/JzzT'],
@@ -74,7 +74,7 @@ describe('permissions', function() {
 
     it("extracts repo from location and denies write permission if not user's repo", function() {
       let state = { repos: ['/NeoDude/Lazerly', '/NeoDude/JzzT'], write: false };
-      let action = { type: SET_LOCATION, location: '/shck-plc/fizl/gh-pages/assets' };
+      let action = { type: SET_LOCATION, href: '/shck-plc/fizl/gh-pages/assets' };
       let expected = {
         repo: '/shck-plc/fizl',
         repos: ['/NeoDude/Lazerly', '/NeoDude/JzzT'],
@@ -86,7 +86,7 @@ describe('permissions', function() {
 
     it("extracts repo from location and denies write permission if repos not loaded", function() {
       let state = { repos: [] };
-      let action = { type: SET_LOCATION, location: '/NeoDude/Lazerly/master/app.rb' };
+      let action = { type: SET_LOCATION, href: '/NeoDude/Lazerly/master/app.rb' };
       let expected = { repo: '/NeoDude/Lazerly', repos: [], write: false };
       assert.deepEqual(permissions(state, action), expected);
     });

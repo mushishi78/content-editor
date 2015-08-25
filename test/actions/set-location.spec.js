@@ -9,7 +9,7 @@ describe('setLocation', function() {
     this.load = () => 'load';
     this.loggedIn = true;
     this.getState = () => ({
-      locations: { current: '/dgaer58/friKtion' },
+      location: { href: '/dgaer58/friKtion' },
       loggedIn: this.loggedIn
     });
   });
@@ -21,7 +21,7 @@ describe('setLocation', function() {
 
   it('dispatches and calls load if logged in', function() {
     setLocation('/js8on/master', this.load)(this.dispatch, this.getState);
-    assert.deepEqual(this.dispatch.args[0][0], { type: SET_LOCATION, location: '/js8on/master' });
+    assert.deepEqual(this.dispatch.args[0][0], { type: SET_LOCATION, href: '/js8on/master' });
     assert.equal(this.dispatch.args[1][0], 'load');
   });
 
@@ -33,6 +33,6 @@ describe('setLocation', function() {
 
   it('removes trailing slashes', function() {
     setLocation('/js8on/master/', this.load)(this.dispatch, this.getState);
-    assert.equal(this.dispatch.args[0][0].location, '/js8on/master');
+    assert.equal(this.dispatch.args[0][0].href, '/js8on/master');
   })
 });
