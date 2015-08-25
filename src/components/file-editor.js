@@ -34,7 +34,8 @@ const styles = {
     width: '94%',
     borderRadius: '10px',
     fontSize: '1.3em',
-    boxShadow: '0 0 2px 2px rgba(0,0,0,0.5)'
+    boxShadow: '0 0 2px 2px rgba(0,0,0,0.5)',
+    fontFamily: "'Ubuntu', sans-serif"
   }
 }
 

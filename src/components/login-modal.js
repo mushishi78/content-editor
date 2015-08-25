@@ -26,7 +26,7 @@ class LoginModal extends React.Component {
                onKeyDown={this.handleKeyDown.bind(this)}
                id='password'/>
 
-        <button style={styles.input}
+        <button style={{ ...styles.input, ...styles.button }}
                 onClick={this.submit.bind(this)}>Login</button>
 
       </section>;
@@ -55,6 +55,11 @@ const styles = {
     margin: '0.5em 0',
     textAlign: 'center',
     borderRadius: '5px'
+  },
+
+  button: {
+    background: '#1abc9c',
+    color: '#fff'
   }
 }
 

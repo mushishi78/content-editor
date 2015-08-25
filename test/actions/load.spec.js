@@ -82,7 +82,6 @@ describe('load', function() {
       this.state.locations.current = '/NeoDude/Lazerly/master/index.js';
       this.atob.returns('console.log("Hello World");')
       this.github.contents.resolves({
-        name: 'index.js',
         content: '08t24h8thw4iugw47gf74w8u2',
         size: 232
       });
@@ -93,10 +92,7 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
-        file: {
-          name: 'index.js',
-          text: 'console.log("Hello World");'
-        }
+        file: { text: 'console.log("Hello World");' }
       });
     });
 

@@ -41,8 +41,8 @@ function setContents(dispatch, parse) {
   return contents => dispatch({ type: LOAD, status: COMPLETED, contents: contents.map(parse) });
 }
 
-function setFile(dispatch, { name, content }, atob) {
-  dispatch({ type: LOAD, status: COMPLETED, file: { name, text: atob(content) } });
+function setFile(dispatch, { content }, atob) {
+  dispatch({ type: LOAD, status: COMPLETED, file: { text: atob(content) } });
 }
 
 function parseBranch(location) {

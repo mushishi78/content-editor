@@ -10,8 +10,6 @@ h1, h2, h3, h4 {
 input { border: 1px solid #CECECE; }
 
 button {
-  background: #1abc9c;
-  color: #fff;
   border: none;
   outline: none;
 }
@@ -22,7 +20,6 @@ a {
 
 textarea {
   outline: none;
-  font-family: 'Ubuntu', sans-serif;
 }
 
 .breadcrumb { display: block; }

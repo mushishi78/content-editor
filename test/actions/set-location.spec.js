@@ -30,4 +30,9 @@ describe('setLocation', function() {
     setLocation('/js8on/master', this.load)(this.dispatch, this.getState);
     assert(this.dispatch.calledOnce);
   });
+
+  it('removes trailing slashes', function() {
+    setLocation('/js8on/master/', this.load)(this.dispatch, this.getState);
+    assert.equal(this.dispatch.args[0][0].location, '/js8on/master');
+  })
 });
