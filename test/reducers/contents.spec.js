@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import sinon from 'sinon';
 import contents from '../../src/reducers/contents';
-import { LOGIN, LOGOUT, LOAD } from '../../src/constants/action-types';
+import { LOGIN, LOGOUT, LOAD, SAVE } from '../../src/constants/action-types';
 import { COMPLETED } from '../../src/constants/status-types';
 import { PATH } from '../../src/constants/location-types';
 
 describe('contents', function() {
   it("caches user's repos to root on login", function() {
-    let action = {
+    const action = {
       type: LOGIN,
       status: COMPLETED,
       repos: [
@@ -25,7 +25,7 @@ describe('contents', function() {
   });
 
   it('forgets everything on logout', function() {
-    let state = {
+    const state = {
       '/NeoDude/Lazerly/master': [
         { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
         { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
@@ -36,19 +36,19 @@ describe('contents', function() {
       ]
     };
 
-    let action = { type: LOGOUT, status: COMPLETED };
+    const action = { type: LOGOUT, status: COMPLETED };
     assert.deepEqual(contents(state, action), {});
   });
 
   it('loads contents', function() {
-    let state = {
+    const state = {
       '/': [
         { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
         { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
       ]
     };
 
-    let action = {
+    const action = {
       type: LOAD,
       status: COMPLETED,
       location: {
@@ -78,7 +78,7 @@ describe('contents', function() {
   });
 
   it('ignores loaded files', function() {
-    let state = {
+    const state = {
       '/NeoDude/Lazerly/master': [
         { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
         { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
@@ -89,12 +89,42 @@ describe('contents', function() {
       ]
     };
 
-    let action = {
+    const action = {
       type: LOAD,
       status: COMPLETED,
       file: { text: 'puts "Whatup world?"\n' }
     };
 
     assert.deepEqual(contents(state, action), state);
+  });
+
+  it('uncaches parent folder on save', function() {
+    const state = {
+      '/NeoDude/Lazerly/master': [
+        { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+        { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+      ],
+      '/': [
+        { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+        { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+      ]
+    };
+
+    const action = {
+      type: SAVE,
+      status: COMPLETED,
+      location: {
+        href: '/NeoDude/Lazerly/master/README.md',
+        type: PATH,
+        owner: 'NeoDude',
+        repo: 'Lazerly',
+        branch: 'master',
+        path: 'README.md'
+      },
+    };
+
+    const result = contents(state, action);
+    assert.ok(result['/']);
+    assert.notOk(result['/NeoDude/Lazerly/master']);
   });
 });

@@ -4,4 +4,5 @@ export { default as github } from './github';
 export { default as location } from './location';
 export { default as loggedIn } from './logged-in';
 export { default as permissions } from './permissions';
+export { default as prompt } from './prompt';
 export { default as status } from './status';

@@ -1,23 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setText } from '../actions/index';
+import { setSelectionRange } from '../utils';
 
 class FileEditor extends React.Component {
   setText(e) { this.props.setText(e.target.value); }
-  autoGrow() {
-    let fileEditor = React.findDOMNode(this.refs.fileEditor);
+
+  refreshFileEditor(prevProps = {}) {
+    const fileEditor = React.findDOMNode(this.refs.fileEditor);
+
     if(fileEditor) {
       fileEditor.style.height = "5px";
       fileEditor.style.height = (fileEditor.scrollHeight)+"px";
+
+      if(!prevProps.file) {
+        const fileEnd = this.props.file.text.length;
+        setSelectionRange(fileEditor, fileEnd, fileEnd);
+      }
     }
   }
-  componentDidMount() { this.autoGrow(); }
-  componentDidUpdate() { this.autoGrow(); }
+
+  componentDidMount()           { this.refreshFileEditor(); }
+  componentDidUpdate(prevProps) { this.refreshFileEditor(prevProps); }
+
   render() {
     return !this.props.file ? null :
       <div>
         <textarea style={styles.textarea}
-                  defaultValue={this.props.file.text}
+                  value={this.props.file.text}
                   onChange={this.setText.bind(this)}
                   disabled={!this.props.permissions.write}
                   ref='fileEditor' />

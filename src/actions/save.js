@@ -9,11 +9,11 @@ export default function save(comment = 'Content-Editor changes') {
     dispatch({ type: SAVE, status: IN_PROGRESS });
 
     github.write(location, text, comment)
-      .then(completed(dispatch))
+      .then(completed(dispatch, location))
       .catch(failed(dispatch, SAVE));
   }
 }
 
-function completed(dispatch) {
-  return () => dispatch({ type: SAVE, status: COMPLETED });
+function completed(dispatch, location) {
+  return () => dispatch({ type: SAVE, status: COMPLETED, location });
 }

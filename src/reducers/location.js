@@ -1,8 +1,20 @@
-import { SET_LOCATION } from '../constants/action-types';
+import { CREATE, SET_LOCATION } from '../constants/action-types';
 import { OWNER, REPO, PATH } from '../constants/location-types';
 
-export default function location(state = {}, { type, href }) {
-  return type === SET_LOCATION ? split(href) : state;
+export default function location(state = {}, { type, href, path }) {
+  switch(type) {
+    case SET_LOCATION:
+      return split(href);
+    case CREATE:
+      return setPath(state, path);
+    default:
+      return state;
+  }
+}
+
+function setPath(state, path) {
+  const href = ['', state.owner, state.repo, state.branch, path].join('/');
+  return { ...state, href, path };
 }
 
 function split(href) {

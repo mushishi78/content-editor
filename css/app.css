@@ -38,3 +38,9 @@ textarea {
 .save-bar-enter.save-bar-enter-active { top: 0; }
 .save-bar-leave { top: 0; }
 .save-bar-leave.save-bar-leave-active { top: 100px; }
+
+.prompt-bar { top: 0; }
+.prompt-bar-enter { top: 100px; }
+.prompt-bar-enter.prompt-bar-enter-active { top: 0; }
+.prompt-bar-leave { top: 0; }
+.prompt-bar-leave.prompt-bar-leave-active { top: 100px; }

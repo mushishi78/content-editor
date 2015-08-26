@@ -7,6 +7,7 @@ import FlashMessage from '../components/flash-message';
 import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
 import SaveBar from '../components/save-bar';
+import PromptBar from '../components/prompt-bar';
 
 class App extends React.Component {
   render() {
@@ -29,6 +30,7 @@ class App extends React.Component {
         </article>
         <footer style={styles.footer}>
           <SaveBar />
+          <PromptBar />
         </footer>
       </main>
     );

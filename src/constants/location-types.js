@@ -1,3 +1,3 @@
-export const OWNER = 'OWNER';
-export const REPO = 'REPO';
-export const PATH = 'PATH';
+export const OWNER = 'Owner';
+export const REPO = 'Repo';
+export const PATH = 'Path';
