@@ -98,33 +98,224 @@ describe('contents', function() {
     assert.deepEqual(contents(state, action), state);
   });
 
-  it('uncaches parent folder on save', function() {
-    const state = {
-      '/NeoDude/Lazerly/master': [
-        { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
-        { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
-      ],
-      '/': [
-        { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
-        { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
-      ]
-    };
+  describe('SAVE', function() {
+    it('adds file to folder on save, if folder loaded', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
 
-    const action = {
-      type: SAVE,
-      status: COMPLETED,
-      location: {
-        href: '/NeoDude/Lazerly/master/README.md',
-        type: PATH,
-        owner: 'NeoDude',
-        repo: 'Lazerly',
-        branch: 'master',
-        path: 'README.md'
-      },
-    };
+      const action = {
+        type: SAVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master/README.md',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: 'README.md'
+        },
+      };
 
-    const result = contents(state, action);
-    assert.ok(result['/']);
-    assert.notOk(result['/NeoDude/Lazerly/master']);
+      assert.deepEqual(contents(state, action), {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' },
+          { label: 'README.md', location: '/NeoDude/Lazerly/master/README.md', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      });
+    });
+
+    it('keeps file in folder on save if folder loaded and already has file', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
+
+      const action = {
+        type: SAVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master/app.rb',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: 'app.rb'
+        },
+      };
+
+      assert.deepEqual(contents(state, action), state);
+    });
+
+    it('ignores files saved in folders that are not loaded', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
+
+      const action = {
+        type: SAVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master/lib/version.rb',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: 'lib/version.rb'
+        },
+      };
+
+      assert.deepEqual(contents(state, action), state);
+    });
+
+    it('adds parent folder if grandparent loaded', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
+
+      const action = {
+        type: SAVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master/bin/Lazerly.exe',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: 'bin/Lazerly.exe'
+        },
+      };
+
+      assert.deepEqual(contents(state, action), {
+        '/NeoDude/Lazerly/master': [
+          { label: 'bin', location: '/NeoDude/Lazerly/master/bin', type: 'dir' },
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      });
+    });
+  });
+
+  describe('MOVE', function() {
+    it('moves file to other folder if both loaded', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/NeoDude/Lazerly/master/lib': [
+          { label: 'lazer.rb', location: '/NeoDude/Lazerly/master/lazer.rb', type: 'file' },
+          { label: 'version.rb', location: '/NeoDude/Lazerly/master/version.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
+
+      const action = {
+        type: MOVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master/lib',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: 'lib'
+        },
+        oldPath: 'lib/lazer.rb',
+        newPath: 'lazer.rb'
+      };
+
+      assert.deepEqual(contents(state, action), {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' },
+          { label: 'lazer.rb', location: '/NeoDude/Lazerly/master/lazer.rb', type: 'file' }
+        ],
+        '/NeoDude/Lazerly/master/lib': [
+          { label: 'version.rb', location: '/NeoDude/Lazerly/master/version.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      });
+    });
+
+    it('removes file if other folder not loaded', function() {
+      const state = {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' },
+          { label: 'app.rb', location: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      };
+
+      const action = {
+        type: MOVE,
+        status: COMPLETED,
+        location: {
+          href: '/NeoDude/Lazerly/master',
+          type: PATH,
+          owner: 'NeoDude',
+          repo: 'Lazerly',
+          branch: 'master',
+          path: ''
+        },
+        oldPath: 'app.rb',
+        newPath: 'lib/app.rb'
+      };
+
+      assert.deepEqual(contents(state, action), {
+        '/NeoDude/Lazerly/master': [
+          { label: 'lib', location: '/NeoDude/Lazerly/master/lib', type: 'dir' }
+        ],
+        '/': [
+          { label: 'NeoDude/Lazerly', location: '/NeoDude/Lazerly', type: 'repo' },
+          { label: 'NeoDude/JzzT', location: '/NeoDude/JzzT', type: 'repo' }
+        ]
+      });
+    });
   });
 });

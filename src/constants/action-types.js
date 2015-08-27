@@ -1,11 +1,11 @@
 export const BLUR = 'Blur';
 export const CREATE = 'Create';
-export const DELETE = 'Delete';
 export const LOAD = 'Load';
 export const LOGIN = 'Login';
 export const LOGOUT = 'Logout';
 export const MOVE = 'Move';
 export const PROMPT = 'Prompt';
+export const REMOVE = 'Remove';
 export const SAVE = 'Save';
 export const SET_LOCATION = 'Set Location';
 export const SET_TEXT= 'Set Text';

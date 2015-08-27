@@ -1,11 +1,9 @@
 import { PROMPT, CREATE } from '../constants/action-types';
 
-export default function prompt(actionType, path) {
+export default function createPrompt() {
   return (dispatch, getState) => {
-    if(actionType === CREATE) {
-      path = createPath(getState().location.path);
-    }
-    dispatch({ type: PROMPT, actionType, path });
+    const path = createPath(getState().location.path);
+    dispatch({ type: PROMPT, actionType: CREATE, path });
   }
 }
 

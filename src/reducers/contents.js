@@ -1,12 +1,16 @@
-import { LOGIN, LOGOUT, LOAD, SAVE } from '../constants/action-types';
+import { LOGIN, LOGOUT, LOAD, SAVE, MOVE, REMOVE } from '../constants/action-types';
 import { COMPLETED } from '../constants/status-types';
 
-export default function contents(state = {}, { type, status, location, repos, contents }) {
+export default function contents(state = {}, action) {
+  const { type, status, location, repos, contents, oldPath, newPath, path } = action;
+
   switch (type) {
     case LOGIN: return { ...state, '/': repos };
     case LOGOUT: return {};
     case LOAD: return contents ? { ...state, [location.href]: contents } : state;
     case SAVE: return status === COMPLETED  ? uncacheParent(state, location) : state;
+    case MOVE:
+    case REMOVE:
     default: return state;
   }
 }

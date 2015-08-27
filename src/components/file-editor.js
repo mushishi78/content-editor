@@ -1,4 +1,5 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setText } from '../actions/index';
 import { setSelectionRange } from '../utils';
@@ -54,7 +55,7 @@ function mapStateToProps({ file, permissions }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { setText: text => dispatch(setText(text)) };
+  return bindActionCreators({ setText }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileEditor);

@@ -3,7 +3,7 @@ import 'react/addons';
 import { FAILED } from '../constants/status-types';
 import { connect } from 'react-redux';
 
-let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
 export default class FlashMessage extends React.Component {
   constructor(props) {

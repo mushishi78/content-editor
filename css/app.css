@@ -33,14 +33,11 @@ textarea {
 .flash-leave { height: 1.7em; }
 .flash-leave.flash-leave-active { height: 0; }
 
-.save-bar { top: 0; }
-.save-bar-enter { top: 100px; }
-.save-bar-enter.save-bar-enter-active { top: 0; }
-.save-bar-leave { top: 0; }
-.save-bar-leave.save-bar-leave-active { top: 100px; }
+.bottom-bar { top: 0; }
+.bottom-bar-enter { top: 100px; }
+.bottom-bar-enter.bottom-bar-enter-active { top: 0; }
+.bottom-bar-leave { top: 0; }
+.bottom-bar-leave.bottom-bar-leave-active { top: 100px; }
 
-.prompt-bar { top: 0; }
-.prompt-bar-enter { top: 100px; }
-.prompt-bar-enter.prompt-bar-enter-active { top: 0; }
-.prompt-bar-leave { top: 0; }
-.prompt-bar-leave.prompt-bar-leave-active { top: 100px; }
+.contents-actions { opacity: 0; }
+li:hover > .contents-actions { opacity: 1; }

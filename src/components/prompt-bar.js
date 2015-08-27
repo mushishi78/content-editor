@@ -1,10 +1,11 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { blur, create } from '../actions/index';
-import { CREATE } from '../constants/action-types';
+import { blur, create, move } from '../actions/index';
+import { CREATE, MOVE } from '../constants/action-types';
 import { setSelectionRange } from '../utils';
 
-let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
 class PromptBar extends React.Component {
   setValue(e) { this.setState({ path: e.target.value }); }
@@ -14,6 +15,8 @@ class PromptBar extends React.Component {
     switch(this.state.type) {
       case CREATE:
         return this.props.create(this.state.path);
+      case MOVE:
+        return this.props.move(this.props.prompt.path, this.state.path);
     }
   }
 
@@ -24,18 +27,27 @@ class PromptBar extends React.Component {
   componentDidUpdate(prevProps, prevSate) {
     if(prevProps.prompt !== this.props.prompt && this.props.prompt) {
       const pathInput = React.findDOMNode(this.refs.pathInput);
-      const index = this.props.prompt.path.search('untitled');
       pathInput.focus();
-      if(index >= 0) { setSelectionRange(pathInput, index, index + 'untitled'.length); }
+
+      if(this.props.prompt.type === CREATE) {
+        this.selectUntitled(pathInput);
+      }
+    }
+  }
+
+  selectUntitled(pathInput) {
+    const index = this.props.prompt.path.search('untitled');
+    if(index >= 0) {
+      setSelectionRange(pathInput, index, index + 'untitled'.length);
     }
   }
 
   render() {
     return (
-      <ReactCSSTransitionGroup transitionName='prompt-bar'>
+      <ReactCSSTransitionGroup transitionName='bottom-bar'>
       {
         !this.props.prompt ? null :
-          <section style={styles.section} className='prompt-bar' key='prompt-bar'>
+          <section style={styles.section} className='bottom-bar' key='bottom-bar'>
             <input type='text'
                    style={styles.input}
                    value={this.state.path}
@@ -80,10 +92,7 @@ function mapStateToProps({ prompt }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    blur: () => dispatch(blur()),
-    create: (href) => dispatch(create(href))
-  };
+  return bindActionCreators({ blur, create, move }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PromptBar);

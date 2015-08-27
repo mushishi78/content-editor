@@ -1,16 +1,20 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { save } from '../actions/index';
 
-let ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
 class SaveBar extends React.Component {
   render() {
     return (
-      <ReactCSSTransitionGroup transitionName='save-bar'>
+      <ReactCSSTransitionGroup transitionName='bottom-bar'>
       {
         !this.props.file || !this.props.file.changed ? null :
-          <button style={styles.button} onClick={this.props.save} className='save-bar' key='save-bar'>
+          <button style={styles.button}
+                  onClick={this.props.save}
+                  className='bottom-bar'
+                  key='bottom-bar'>
             Save
           </button>
       }
@@ -37,9 +41,7 @@ function mapStateToProps({ file }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    save: () => dispatch(save())
-  };
+  return bindActionCreators({ save }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveBar);

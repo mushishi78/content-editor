@@ -1,4 +1,5 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logout } from '../actions/index';
 
@@ -68,7 +69,7 @@ function mapStateToProps({ loggedIn, location: { href } }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { logout: () => { dispatch(logout()); } };
+  return bindActionCreators({ logout }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopBar);

@@ -1,7 +1,8 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { prompt } from '../actions/index';
-import { CREATE } from '../constants/action-types';
+import { createPrompt, movePrompt } from '../actions/index';
+import { CREATE, MOVE, REMOVE } from '../constants/action-types';
 import { PATH } from '../constants/location-types';
 
 class ContentsViewer extends React.Component {
@@ -19,8 +20,20 @@ class ContentsViewer extends React.Component {
                 <li style={styles.li} key={label} className='two-columns'>
                   <a style={styles.a} href={href}>
                     <i style={styles.icon} className={'octicon octicon-' + icon(type)} />
-                    <span style={styles.span}>{label}</span>
+                    {label}
                   </a>
+                  {
+                    type !== 'file' && type !== 'dir' ? null :
+                      <span style={styles.actions} className='contents-actions'>
+                        <i style={styles.icon}
+                           className='octicon octicon-pencil'
+                           onClick={this.props.movePrompt.bind(null, href)} />
+
+                        <i style={styles.icon}
+                           className='octicon octicon-trashcan' />
+
+                      </span>
+                  }
                 </li>
               );
             })
@@ -31,7 +44,7 @@ class ContentsViewer extends React.Component {
             <nav style={styles.nav}>
               <i style={styles.icon}
                  className='octicon octicon-plus'
-                 onClick={this.props.prompt.bind(null, CREATE)} />
+                 onClick={this.props.createPrompt} />
             </nav>
         }
       </section>;
@@ -39,8 +52,8 @@ class ContentsViewer extends React.Component {
 }
 
 function alphabetical(a, b) {
-  let lowerA = a.toLowerCase();
-  let lowerB = b.toLowerCase();
+  const lowerA = a.toLowerCase();
+  const lowerB = b.toLowerCase();
   if(lowerA < lowerB) return -1;
   if(lowerA > lowerB) return 1;
   return 0
@@ -76,7 +89,8 @@ const styles = {
     margin: '0.1em 0'
   },
   a: {
-    color: '#34495E'
+    color: '#34495E',
+    verticalAlign: 'middle'
   },
   icon: {
     color: '#34495E',
@@ -84,10 +98,10 @@ const styles = {
     fontSize: '1em',
     cursor: 'pointer'
   },
-  span: {
-    display: 'inline-block',
-    verticalAlign: 'top',
-    width: '93%'
+  actions: {
+    marginLeft: '0.5em',
+    fontSize: '0.8em',
+    transition: 'all .1s ease-in'
   }
 }
 
@@ -100,7 +114,7 @@ function mapStateToProps({ contents, location, permissions }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { prompt: (action, href) => dispatch(prompt(action, href)) };
+  return bindActionCreators({ createPrompt, movePrompt }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentsViewer);
