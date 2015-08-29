@@ -1,11 +1,11 @@
 .flash { height: 1.7em; }
 .flash-enter { height: 0; }
-.flash-enter.flash-enter-active { height: 1.7em; }
+.flash-enter-active { height: 1.7em; }
 .flash-leave { height: 1.7em; }
-.flash-leave.flash-leave-active { height: 0; }
+.flash-leave-active { height: 0; }
 
-.bottom-bar { top: 0; }
+/*.bottom-bar { top: 0; }*/
 .bottom-bar-enter { top: 100px; }
-.bottom-bar-enter.bottom-bar-enter-active { top: 0; }
+.bottom-bar-enter-active { top: 0; }
 .bottom-bar-leave { top: 0; }
-.bottom-bar-leave.bottom-bar-leave-active { top: 100px; }
+.bottom-bar-leave-active { top: 100px; }
