@@ -15,7 +15,7 @@ class TopBar extends React.Component {
 
   logout() {
     return(
-      <a onClick={this.props.logout} href='javascript:void(0)' style={styles.logout}>
+      <a onClick={this.props.logout.bind(this, undefined)} href='javascript:void(0)' style={styles.logout}>
         <i style={styles.icon} className='octicon octicon-log-out' />
       </a>
     );
