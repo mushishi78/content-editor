@@ -1,17 +1,46 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createPrompt, movePrompt, removeConfirm } from '../actions/index';
 import { CREATE, MOVE, REMOVE } from '../constants/action-types';
 import { PATH } from '../constants/location-types';
 
 class ContentsViewer extends React.Component {
+  parseContents() {
+    const parent = this.props.location.href === '/' ? '' : this.props.location.href;
+    const pattern = new RegExp(parent + '\\/[^\\/]+$');
+    let parsed = [];
+
+    for(let href in this.props.contents) {
+      if(href.search(pattern) === 0) {
+        const label = href.match(/[^\/]+$/)[0];
+        parsed.push({ label, href, type: this.props.contents[href] });
+      }
+    }
+
+    return parsed[0] ? parsed.sort(this.order.bind(this)) : null;
+  }
+
+  order(a, b) {
+    return this.alphabetical(a.type, b.type) || this.alphabetical(a.label, b.label);
+  }
+
+  alphabetical(a, b) {
+    const lowerA = a.toLowerCase();
+    const lowerB = b.toLowerCase();
+    if(lowerA < lowerB) return -1;
+    if(lowerA > lowerB) return 1;
+    return 0
+  }
+
   render() {
-    return !this.props.contents ? null :
+    const contents = this.parseContents();
+    const canCreate = this.props.location.type === PATH && this.props.permissions.write;
+
+    return !contents ? null :
       <section style={styles.section}>
         <ul style={styles.ul}>
           {
-            this.props.contents.map(({ label, href, type }) => {
+            contents.map(({ label, href, type }) => {
               return (
                 <li style={styles.li} key={label} className='two-columns'>
                   <a style={styles.a} href={href}>
@@ -36,7 +65,7 @@ class ContentsViewer extends React.Component {
           }
         </ul>
         {
-          !this.props.canCreate ? null :
+          !canCreate ? null :
             <nav style={styles.nav}>
               <i style={styles.icon}
                  className={icons.create}
@@ -100,42 +129,11 @@ const styles = {
   }
 }
 
-function parseContents(contents, location, parsed = []) {
-  const parent = location.href === '/' ? '' : location.href;
-  const pattern = new RegExp(parent + '\\/[^\\/]+$');
-
-  for(let href in contents) {
-    if(href.search(pattern) === 0) {
-      const label = href.match(/[^\/]+$/)[0];
-      parsed.push({ label, href, type: contents[href] });
-    }
-  }
-
-  return parsed[0] ? parsed.sort(order) : null;
-}
-
-function order(a, b) {
-  return alphabetical(a.type, b.type) || alphabetical(a.label, b.label);
-}
-
-function alphabetical(a, b) {
-  const lowerA = a.toLowerCase();
-  const lowerB = b.toLowerCase();
-  if(lowerA < lowerB) return -1;
-  if(lowerA > lowerB) return 1;
-  return 0
-}
-
 function mapStateToProps({ contents, location, permissions }) {
-  return {
-    contents: parseContents(contents, location),
-    permissions,
-    canCreate: location.type === PATH && permissions.write
-  };
+  return { contents, location, permissions };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createPrompt, movePrompt, removeConfirm }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContentsViewer);
+export default connect(
+  mapStateToProps,
+  { createPrompt, movePrompt, removeConfirm }
+)(ContentsViewer);
