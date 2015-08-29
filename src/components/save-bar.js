@@ -12,7 +12,7 @@ class SaveBar extends React.Component {
       {
         !this.props.file || !this.props.file.changed ? null :
           <button style={styles.button}
-                  onClick={this.props.save}
+                  onClick={this.props.save.bind(this, undefined)}
                   className='bottom-bar'
                   key='bottom-bar'>
             Save

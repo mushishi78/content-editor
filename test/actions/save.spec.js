@@ -9,6 +9,7 @@ sinonStubPromise(sinon);
 
 describe('save', function() {
   const location = { href: 'NeoDude/Lazerly/master/app.rb' },
+        comment  = 'Initial commit',
         text     = 'puts "Hello World!"';
 
   beforeEach(function() {
@@ -18,19 +19,19 @@ describe('save', function() {
   });
 
   afterEach(function() {
-    assert(this.github.write.calledWith(location, text, 'Content-Editor changes'));
+    assert(this.github.write.calledWith(location, text, comment));
     assert.deepEqual(this.dispatch.args[0][0], { type: SAVE, status: IN_PROGRESS });
   })
 
   it('writes and dispatches complete', function() {
     this.github.write.resolves();
-    save()(this.dispatch, this.getState);
+    save(comment)(this.dispatch, this.getState);
     assert.deepEqual(this.dispatch.args[1][0], { type: SAVE, status: COMPLETED, location });
   });
 
   it('dispatches failed when github fails', function() {
     this.github.write.rejects({ message: 'Not Found' });
-    save()(this.dispatch, this.getState);
+    save(comment)(this.dispatch, this.getState);
     assert.deepEqual(this.dispatch.args[1][0], { type: SAVE, status: FAILED, flash: 'Not Found' });
   });
 });
