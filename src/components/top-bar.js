@@ -9,7 +9,7 @@ class TopBar extends React.Component {
       <header style={styles.header}>
         {this.logout()}
         {this.home()}
-        {this.breadcrumbs()}
+        {this.props.href ? this.breadcrumbs() : null}
       </header>
   }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react/addons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { blur, create, move } from '../actions/index';

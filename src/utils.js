@@ -13,6 +13,7 @@ export function failed(dispatch, constant) {
 
     dispatch({ type: constant, status: FAILED, flash: message });
     console.log(message);
+    console.log(err);
   };
 }
 

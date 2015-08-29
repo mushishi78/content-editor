@@ -1,19 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { IN_PROGRESS } from '../constants/status-types';
-import LoginModal from '../components/login-modal';
-import TopBar from '../components/top-bar';
-import FlashMessage from '../components/flash-message';
+import ConfirmBar from '../components/confirm-bar';
 import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
-import SaveBar from '../components/save-bar';
+import FlashMessage from '../components/flash-message';
+import LocationBar from '../components/location-bar';
+import LoginModal from '../components/login-modal';
 import PromptBar from '../components/prompt-bar';
-import ConfirmBar from '../components/confirm-bar';
+import SaveBar from '../components/save-bar';
+import TopBar from '../components/top-bar';
 
 class App extends React.Component {
   render() {
     return (
         <main>
+          <LocationBar />
           <FlashMessage status={this.props.status} />
           {
             this.props.status.type === IN_PROGRESS ? <div className='loader' /> :

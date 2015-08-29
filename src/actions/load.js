@@ -6,7 +6,7 @@ import { atob as _atob, failed, isArray } from '../utils';
 export default function load(atob = _atob) {
   return (dispatch, getState) => {
     const { location, loaded, github } = getState();
-    if(loaded[location.href]) { return; }
+    if(loaded[location.href || '/']) { return; }
     dispatch({ type: LOAD, status: IN_PROGRESS });
     getMethod(location)(dispatch, location, github, atob).catch(failed(dispatch, LOAD));
   }
