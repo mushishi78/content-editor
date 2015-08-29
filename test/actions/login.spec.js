@@ -23,7 +23,7 @@ describe('login', function() {
     this.load = () => 'load';
     this.github = { repos: sinon.stub().returnsPromise() };
     this.GHPromiser = sinon.stub().withArgs(username, password).returns(this.github);
-    this.storage = { getItem: sinon.stub(), setItem: sinon.spy() };
+    this.storage = { getItem: sinon.stub(), setItem: sinon.spy(), removeItem: sinon.spy() };
   });
 
   it('ignores if credentials not given or stored', function() {
@@ -77,12 +77,19 @@ describe('login', function() {
 
   it('fails if credentials given but GitHub fails', function() {
     this.github.repos.rejects({ message: 'Not Authorized' });
-    login({ username, password}, this.GHPromiser, this.load, this.storage)(this.dispatch);
+    login({ username, password }, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
     assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
       type: LOGIN, status: FAILED, flash: 'Not Authorized'
     });
     assert(this.dispatch.calledTwice);
+  });
+
+  it('undefined credentials remove from storage', function() {
+    login({}, this.GHPromiser, this.load, this.storage)(this.dispatch);
+    assert(this.storage.setItem.notCalled);
+    assert.equal(this.storage.removeItem.args[0][0], 'username');
+    assert.equal(this.storage.removeItem.args[1][0], 'password');
   });
 });

@@ -18,8 +18,6 @@ const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
-store.dispatch(login());
-
 React.render((
   <Provider store={store}>
     {() => <App />}

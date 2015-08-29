@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { IN_PROGRESS } from '../constants/status-types';
+import { login } from '../actions/index';
 import ConfirmBar from '../components/confirm-bar';
 import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
@@ -13,6 +15,7 @@ import SaveBar from '../components/save-bar';
 import TopBar from '../components/top-bar';
 
 class App extends React.Component {
+  componentDidMount() { this.props.login(); }
   render() {
     return (
         <main>
@@ -49,4 +52,8 @@ function mapStateToProps({ status, loggedIn }) {
   return { status, loggedIn };
 }
 
-export default connect(mapStateToProps, null)(App);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ login }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -21,7 +21,12 @@ export default function login({ username, password } = {}, GHPromiser = _GHPromi
 function backup(key, value, storage) {
   if(storage) {
     value = value || storage.getItem(key);
-    storage.setItem(key, value);
+
+    if(value) {
+      storage.setItem(key, value);
+    } else {
+      storage.removeItem(key);
+    }
   }
   return value;
 }
