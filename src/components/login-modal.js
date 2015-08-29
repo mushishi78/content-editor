@@ -9,7 +9,7 @@ class LoginModal extends React.Component {
   change(e) { this.setState({ [e.target.id]: e.target.value }); }
   handleKeyDown(e) { if(e.key === 'Enter') { this.submit(); } }
   render() {
-    return this.props.loggedIn ? null :
+    return (
       <section style={styles.section}>
         <h1 style={styles.heading}>Content Editor</h1>
 
@@ -30,7 +30,8 @@ class LoginModal extends React.Component {
         <button style={{ ...styles.input, ...styles.button }}
                 onClick={this.submit.bind(this)}>Login</button>
 
-      </section>;
+      </section>
+    );
   }
 }
 
@@ -64,12 +65,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ loggedIn }) {
-  return { loggedIn };
-}
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ login }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);
+export default connect(null, mapDispatchToProps)(LoginModal);

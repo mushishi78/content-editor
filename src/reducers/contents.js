@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, LOAD, SAVE, MOVE, REMOVE } from '../constants/action-types';
+import { LOGIN, LOAD, SAVE, MOVE, REMOVE } from '../constants/action-types';
 import { COMPLETED } from '../constants/status-types';
 
 export default function contents(state = {}, action) {
@@ -6,7 +6,6 @@ export default function contents(state = {}, action) {
 
   switch (type) {
     case LOGIN: return repos ? mergeRepos(state, repos) : state;
-    case LOGOUT: return {};
     case LOAD: return contents ? merge(state, contents) : state;
     case SAVE: return location ? add(state, location.href) : state;
     case MOVE: return location ? move(state, action) : state;

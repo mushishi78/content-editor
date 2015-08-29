@@ -13,28 +13,23 @@ import ConfirmBar from '../components/confirm-bar';
 class App extends React.Component {
   render() {
     return (
-      <main>
-        <article>
-          <header>
-            <TopBar />
-            <FlashMessage status={this.props.status} />
-          </header>
-          {
-            this.props.status.type !== IN_PROGRESS ?
-              <section>
-                <LoginModal />
-                <ContentsViewer />
-                <FileEditor />
-              </section> :
-              <div className='loader' />
-          }
-        </article>
-        <footer style={styles.footer}>
-          <SaveBar />
-          <PromptBar />
-          <ConfirmBar />
-        </footer>
-      </main>
+      this.props.status.type === IN_PROGRESS ? <div className='loader' /> :
+      !this.props.loggedIn ? <LoginModal /> :
+        <main>
+          <article>
+            <header>
+              <TopBar />
+              <FlashMessage status={this.props.status} />
+            </header>
+            <ContentsViewer />
+            <FileEditor />
+          </article>
+          <footer style={styles.footer}>
+            <SaveBar />
+            <PromptBar />
+            <ConfirmBar />
+          </footer>
+        </main>
     );
   }
 }
@@ -47,8 +42,8 @@ const styles = {
   }
 }
 
-function mapStateToProps({ status }) {
-  return { status };
+function mapStateToProps({ status, loggedIn }) {
+  return { status, loggedIn };
 }
 
 export default connect(mapStateToProps, null)(App);
