@@ -26,8 +26,7 @@ export default class FlashMessage extends React.Component {
       fontSize: '2em',
       transition: 'all .3s ease-in',
       width: '100%',
-      background: this.props.status.type === FAILED ? '#e74c3c' : '#2ecc71',
-      boxShadow: '0 1px 1px 1px rgba(0,0,0,0.5)'
+      background: this.props.status.type === FAILED ? '#e74c3c' : '#2ecc71'
     };
   }
 

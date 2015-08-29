@@ -31,7 +31,7 @@ const styles = {
     width: '100%',
     padding: '15px 0',
     boxShadow: '0 0 5px 2px #10582F',
-    transition: 'all .3s ease-in',
+    transition: 'all .3s ease',
     color: '#fff'
   }
 }

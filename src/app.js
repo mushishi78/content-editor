@@ -1,6 +1,7 @@
 import '../css/normalize.css';
 import '../css/octicons.css';
 import '../css/loader.css';
+import '../css/animations.css';
 import '../css/app.css';
 
 import 'babel/polyfill';

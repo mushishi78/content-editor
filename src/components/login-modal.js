@@ -48,7 +48,8 @@ const styles = {
 
   heading: {
     textAlign: 'center',
-    margin: '0.1em'
+    margin: '0.1em',
+    color: '#2c3e50'
   },
 
   input: {

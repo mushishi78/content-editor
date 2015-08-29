@@ -7,7 +7,7 @@ import { setSelectionRange } from '../utils';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-class Confirm extends React.Component {
+class ConfirmBar extends React.Component {
   submit() {
     switch(this.props.confirm.type) {
       case REMOVE:
@@ -81,4 +81,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ blur, remove }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Confirm);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmBar);

@@ -13,22 +13,22 @@ import ConfirmBar from '../components/confirm-bar';
 class App extends React.Component {
   render() {
     return (
-      this.props.status.type === IN_PROGRESS ? <div className='loader' /> :
-      !this.props.loggedIn ? <LoginModal /> :
         <main>
-          <article>
-            <header>
-              <TopBar />
-              <FlashMessage status={this.props.status} />
-            </header>
-            <ContentsViewer />
-            <FileEditor />
-          </article>
-          <footer style={styles.footer}>
-            <SaveBar />
-            <PromptBar />
-            <ConfirmBar />
-          </footer>
+          <FlashMessage status={this.props.status} />
+          {
+            this.props.status.type === IN_PROGRESS ? <div className='loader' /> :
+            !this.props.loggedIn ? <LoginModal /> :
+              <article>
+                <TopBar />
+                <ContentsViewer />
+                <FileEditor />
+                <footer style={styles.footer}>
+                  <SaveBar />
+                  <PromptBar />
+                  <ConfirmBar />
+                </footer>
+              </article>
+          }
         </main>
     );
   }

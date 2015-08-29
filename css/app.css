@@ -3,41 +3,10 @@ body {
   font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
-h1, h2, h3, h4 {
-  color: #2c3e50
-}
-
 input { border: 1px solid #CECECE; }
-
-button {
-  border: none;
-  outline: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-textarea {
-  outline: none;
-}
-
-.breadcrumb { display: block; }
-@media (min-width: 700px) {
-  .breadcrumb { display: inline-block; }
-}
-
-.flash { height: 1.7em; }
-.flash-enter { height: 0; }
-.flash-enter.flash-enter-active { height: 1.7em; }
-.flash-leave { height: 1.7em; }
-.flash-leave.flash-leave-active { height: 0; }
-
-.bottom-bar { top: 0; }
-.bottom-bar-enter { top: 100px; }
-.bottom-bar-enter.bottom-bar-enter-active { top: 0; }
-.bottom-bar-leave { top: 0; }
-.bottom-bar-leave.bottom-bar-leave-active { top: 100px; }
+a, button, input, textarea { outline: none; }
+a { text-decoration: none; }
+button { border: none; }
 
 .contents-actions { opacity: 0; }
 li:hover > .contents-actions { opacity: 1; }

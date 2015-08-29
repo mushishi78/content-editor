@@ -6,11 +6,11 @@ import { logout } from '../actions/index';
 class TopBar extends React.Component {
   render() {
     return !this.props.loggedIn ? null :
-      <nav style={styles.nav}>
+      <header style={styles.header}>
         {this.logout()}
         {this.home()}
         {this.breadcrumbs()}
-      </nav>
+      </header>
   }
 
   logout() {
@@ -32,7 +32,7 @@ class TopBar extends React.Component {
   breadcrumbs() {
     return this.props.href.split('/').map((label, i, array) => {
       return !label ? null :
-        <span className='breadcrumb'>
+        <span style={styles.breadcrumb} key={i}>
           <a href={array.slice(0, i + 1).join('/')} style={styles.a}>{label}</a>
           { i < array.length - 1 ? '/' : '' }
         </span>
@@ -41,16 +41,20 @@ class TopBar extends React.Component {
 }
 
 const styles = {
-  nav: {
+  header: {
     background: '#fff',
     fontSize: '1.5em',
     padding: '0.3em',
-    boxShadow: '0 0 2px 2px rgba(0,0,0,0.5)'
+    boxShadow: '0 1px 1px 1px rgba(0,0,0,0.5)'
   },
 
   a: {
     color: '#2980b9',
     padding: '0 0.2em'
+  },
+
+  breadcrumb: {
+    display: 'inline-block'
   },
 
   icon: {
