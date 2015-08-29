@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { login } from '../actions/index';
 import { IN_PROGRESS } from '../constants/status-types';
@@ -66,8 +65,4 @@ const styles = {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ login }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(LoginModal);
+export default connect(null, { login })(LoginModal);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import addressbar from 'addressbar';
 import { setLocation } from '../actions/index';
@@ -26,9 +25,4 @@ class LocationBar extends React.Component {
 function mapStateToProps({ location: { href } }) {
   return { href };
 }
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setLocation }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LocationBar);
+export default connect(mapStateToProps, { setLocation })(LocationBar);

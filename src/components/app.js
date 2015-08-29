@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { IN_PROGRESS } from '../constants/status-types';
 import { login } from '../actions/index';
@@ -52,8 +51,4 @@ function mapStateToProps({ status, loggedIn }) {
   return { status, loggedIn };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ login }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, { login })(App);

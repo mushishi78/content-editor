@@ -1,6 +1,5 @@
 import React from 'react';
 import 'react/addons';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { save } from '../actions/index';
 
@@ -41,8 +40,4 @@ function mapStateToProps({ file }) {
   return { file };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ save }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SaveBar);
+export default connect(mapStateToProps, { save })(SaveBar);

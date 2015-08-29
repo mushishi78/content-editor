@@ -1,6 +1,5 @@
 import React from 'react';
 import 'react/addons';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { blur, create, move } from '../actions/index';
 import { CREATE, MOVE } from '../constants/action-types';
@@ -91,9 +90,4 @@ const styles = {
 function mapStateToProps({ prompt }) {
   return { prompt };
 }
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ blur, create, move }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PromptBar);
+export default connect(mapStateToProps, { blur, create, move })(PromptBar);

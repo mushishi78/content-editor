@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setText } from '../actions/index';
 import { setSelectionRange } from '../utils';
@@ -53,9 +52,4 @@ const styles = {
 function mapStateToProps({ file, permissions }) {
   return { file, permissions };
 }
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setText }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FileEditor);
+export default connect(mapStateToProps, { setText })(FileEditor);

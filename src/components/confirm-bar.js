@@ -1,6 +1,5 @@
 import React from 'react';
 import 'react/addons';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { blur, remove } from '../actions/index';
 import { REMOVE } from '../constants/action-types';
@@ -78,8 +77,4 @@ function mapStateToProps({ confirm }) {
   return { confirm };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ blur, remove }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmBar);
+export default connect(mapStateToProps, { blur, remove })(ConfirmBar);
