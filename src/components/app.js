@@ -8,6 +8,7 @@ import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
 import SaveBar from '../components/save-bar';
 import PromptBar from '../components/prompt-bar';
+import ConfirmBar from '../components/confirm-bar';
 
 class App extends React.Component {
   render() {
@@ -31,6 +32,7 @@ class App extends React.Component {
         <footer style={styles.footer}>
           <SaveBar />
           <PromptBar />
+          <ConfirmBar />
         </footer>
       </main>
     );

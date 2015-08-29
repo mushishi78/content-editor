@@ -16,10 +16,7 @@ describe('login', function() {
     { full_name: 'shck-plc/fizl', stars: 12 }
   ];
 
-  const parsedRepos = [
-    { label: 'NeoDude/Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
-    { label: 'shck-plc/fizl', href: '/shck-plc/fizl', type: 'repo' }
-  ];
+  const parsedRepos = ['/NeoDude/Lazerly', '/shck-plc/fizl'];
 
   beforeEach(function() {
     this.dispatch = sinon.spy();

@@ -3,7 +3,6 @@ import { LOGIN, LOGOUT, SET_LOCATION } from '../constants/action-types';
 export default function permissions(state = { repos: [] }, { type, href, repos = [] }) {
   switch (type) {
     case LOGIN:
-      const repos = repos.map(repo => repo.href);
       return { ...state, repos, write: write(repos, state.repo) };
 
     case LOGOUT:

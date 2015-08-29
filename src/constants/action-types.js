@@ -1,4 +1,5 @@
 export const BLUR = 'Blur';
+export const CONFIRM = 'Confirm';
 export const CREATE = 'Create';
 export const LOAD = 'Load';
 export const LOGIN = 'Login';

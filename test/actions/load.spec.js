@@ -17,23 +17,13 @@ describe('load', function() {
     this.github = {};
     this.atob = sinon.stub();
     this.location = {};
-    this.contents = {
-      '/NeoDude/Lazerly/master': [
-        { label: 'lib', href: '/NeoDude/Lazerly/master/lib', type: 'dir' },
-        { label: 'app.rb', href: '/NeoDude/Lazerly/master/app.rb', type: 'file' }
-      ],
-      '/': [
-        { label: 'NeoDude/Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
-        { label: 'NeoDude/JzzT', href: '/NeoDude/JzzT', type: 'repo' }
-      ]
-    }
-    this.state = { github: this.github, location: this.location, contents: this.contents };
+    this.loaded = { '/NeoDude/Lazerly/master': true, '/': true };
+    this.state = { github: this.github, location: this.location, loaded: this.loaded };
     this.getState = () => this.state;
   });
 
   it('ignores if contents already loaded', function() {
     this.location.href = '/NeoDude/Lazerly/master';
-    this.location.type = PATH;
     load(this.atob)(this.dispatch, this.getState);
     assert(this.dispatch.notCalled);
   });
@@ -53,13 +43,14 @@ describe('load', function() {
     it('dispatches list of branches if location is a repo', function() {
       this.github.listBranches.resolves(['master', 'gh-pages']);
       load(this.atob)(this.dispatch, this.getState);
+
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
-        location: this.location,
+        href: this.location.href,
         contents: [
-          { label: 'master',   href: '/NeoDude/Lazerly/master',   type: 'branch' },
-          { label: 'gh-pages', href: '/NeoDude/Lazerly/gh-pages', type: 'branch' }
+          { href: '/NeoDude/Lazerly/master',   type: 'branch' },
+          { href: '/NeoDude/Lazerly/gh-pages', type: 'branch' }
         ]
       });
     });
@@ -113,11 +104,11 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
-        location: this.location,
+        href: this.location.href,
         contents: [
-          { label: 'snap.c',  href: '/NeoDude/Lazerly/master/lib/snap.c' , type: 'file' },
-          { label: 'crackle', href: '/NeoDude/Lazerly/master/lib/crackle', type: 'dir'  },
-          { label: '.pop',    href: '/NeoDude/Lazerly/master/lib/.pop',    type: 'file' }
+          { href: '/NeoDude/Lazerly/master/lib/snap.c' , type: 'file' },
+          { href: '/NeoDude/Lazerly/master/lib/crackle', type: 'dir'  },
+          { href: '/NeoDude/Lazerly/master/lib/.pop',    type: 'file' }
         ]
       });
     });
@@ -145,8 +136,8 @@ describe('load', function() {
     it('dispatches list of repos if location is an owner and owner is a user', function() {
       this.location.href = '/NeoDude';
       this.github.userRepos.resolves([
-        { name: 'Lazerly', full_name: 'NeoDude/Lazerly', stars: 2 },
-        { name: 'fish-js', full_name: 'NeoDude/fish-js', stars: 5 }
+        { full_name: 'NeoDude/Lazerly', stars: 2 },
+        { full_name: 'NeoDude/fish-js', stars: 5 }
       ]);
 
       load(this.atob)(this.dispatch, this.getState);
@@ -154,10 +145,10 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
-        location: this.location,
+        href: this.location.href,
         contents: [
-          { label: 'Lazerly', href: '/NeoDude/Lazerly', type: 'repo' },
-          { label: 'fish-js', href: '/NeoDude/fish-js', type: 'repo' }
+          { href: '/NeoDude/Lazerly', type: 'repo' },
+          { href: '/NeoDude/fish-js', type: 'repo' }
         ]
       });
     });
@@ -166,8 +157,8 @@ describe('load', function() {
       this.location.href = '/shck-plc';
       this.github.userRepos.resolves([]);
       this.github.orgRepos.resolves([
-        { name: 'fizl', full_name: 'shck-plc/fizl', stars: 12 },
-        { name: 'lift', full_name: 'shck-plc/lift', stars: 5  }
+        { full_name: 'shck-plc/fizl', stars: 12 },
+        { full_name: 'shck-plc/lift', stars: 5  }
       ]);
 
       load(this.atob)(this.dispatch, this.getState);
@@ -176,10 +167,10 @@ describe('load', function() {
       assert.deepEqual(this.dispatch.args[1][0], {
         type: LOAD,
         status: COMPLETED,
-        location: this.location,
+        href: this.location.href,
         contents: [
-          { label: 'fizl', href: '/shck-plc/fizl', type: 'repo' },
-          { label: 'lift', href: '/shck-plc/lift', type: 'repo' }
+          { href: '/shck-plc/fizl', type: 'repo' },
+          { href: '/shck-plc/lift', type: 'repo' }
         ]
       });
     });

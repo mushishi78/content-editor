@@ -5,8 +5,8 @@ import { atob as _atob, failed, isArray } from '../utils';
 
 export default function load(atob = _atob) {
   return (dispatch, getState) => {
-    const { location, contents, github } = getState();
-    if(contents[location.href]) { return; }
+    const { location, loaded, github } = getState();
+    if(loaded[location.href]) { return; }
     dispatch({ type: LOAD, status: IN_PROGRESS });
     getMethod(location)(dispatch, location, github, atob).catch(failed(dispatch, LOAD));
   }
@@ -43,7 +43,7 @@ function setContents(dispatch, location, parse) {
   return contents => dispatch({
     type: LOAD,
     status: COMPLETED,
-    location,
+    href: location.href,
     contents: contents.map(parse)
   });
 }
@@ -53,13 +53,13 @@ function setFile(dispatch, { content }, atob) {
 }
 
 function parseBranch(location) {
-  return branch => ({ label: branch, href: location.href + '/' + branch, type: 'branch' });
+  return branch => ({ href: location.href + '/' + branch, type: 'branch' });
 }
 
 function parseFolder(location) {
-  return ({ name, type }) => ({ label: name, href: location.href + '/' + name, type });
+  return ({ name, type }) => ({ href: location.href + '/' + name, type });
 }
 
-function parseOwnerRepo({ name, full_name }) {
-  return { label: name, href: '/' + full_name, type: 'repo' };
+function parseOwnerRepo({ full_name }) {
+  return { href: '/' + full_name, type: 'repo' };
 }

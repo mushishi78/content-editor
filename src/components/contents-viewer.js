@@ -1,37 +1,33 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createPrompt, movePrompt } from '../actions/index';
+import { createPrompt, movePrompt, removeConfirm } from '../actions/index';
 import { CREATE, MOVE, REMOVE } from '../constants/action-types';
 import { PATH } from '../constants/location-types';
 
 class ContentsViewer extends React.Component {
-  order(a, b) {
-    return alphabetical(a.type, b.type) || alphabetical(a.label, b.label);
-  }
-
   render() {
     return !this.props.contents ? null :
       <section style={styles.section}>
         <ul style={styles.ul}>
           {
-            this.props.contents.sort(this.order).map(({ label, href, type }) => {
+            this.props.contents.map(({ label, href, type }) => {
               return (
                 <li style={styles.li} key={label} className='two-columns'>
                   <a style={styles.a} href={href}>
-                    <i style={styles.icon} className={'octicon octicon-' + icon(type)} />
+                    <i style={styles.icon} className={icons[type]} />
                     {label}
                   </a>
                   {
-                    type !== 'file' && type !== 'dir' ? null :
+                    type !== 'file' ? null :
                       <span style={styles.actions} className='contents-actions'>
                         <i style={styles.icon}
-                           className='octicon octicon-pencil'
+                           className={icons.move}
                            onClick={this.props.movePrompt.bind(null, href)} />
 
                         <i style={styles.icon}
-                           className='octicon octicon-trashcan' />
-
+                           className={icons.remove}
+                           onClick={this.props.removeConfirm.bind(null, href)} />
                       </span>
                   }
                 </li>
@@ -43,7 +39,7 @@ class ContentsViewer extends React.Component {
           !this.props.canCreate ? null :
             <nav style={styles.nav}>
               <i style={styles.icon}
-                 className='octicon octicon-plus'
+                 className={icons.create}
                  onClick={this.props.createPrompt} />
             </nav>
         }
@@ -51,16 +47,15 @@ class ContentsViewer extends React.Component {
   }
 }
 
-function alphabetical(a, b) {
-  const lowerA = a.toLowerCase();
-  const lowerB = b.toLowerCase();
-  if(lowerA < lowerB) return -1;
-  if(lowerA > lowerB) return 1;
-  return 0
-}
-
-function icon(type) {
-  return { dir: 'file-directory', file: 'file-text', repo: 'repo', branch: 'git-branch' }[type];
+const icons = {
+  owner:  'octicon octicon-person',
+  repo:   'octicon octicon-repo',
+  branch: 'octicon octicon-git-branch',
+  dir:    'octicon octicon-file-directory',
+  file:   'octicon octicon-file-text',
+  create: 'octicon octicon-plus',
+  move:   'octicon octicon-pencil',
+  remove: 'octicon octicon-trashcan'
 }
 
 const styles = {
@@ -105,16 +100,42 @@ const styles = {
   }
 }
 
+function parseContents(contents, location, parsed = []) {
+  const parent = location.href === '/' ? '' : location.href;
+  const pattern = new RegExp(parent + '\\/[^\\/]+$');
+
+  for(let href in contents) {
+    if(href.search(pattern) === 0) {
+      const label = href.match(/[^\/]+$/)[0];
+      parsed.push({ label, href, type: contents[href] });
+    }
+  }
+
+  return parsed[0] ? parsed.sort(order) : null;
+}
+
+function order(a, b) {
+  return alphabetical(a.type, b.type) || alphabetical(a.label, b.label);
+}
+
+function alphabetical(a, b) {
+  const lowerA = a.toLowerCase();
+  const lowerB = b.toLowerCase();
+  if(lowerA < lowerB) return -1;
+  if(lowerA > lowerB) return 1;
+  return 0
+}
+
 function mapStateToProps({ contents, location, permissions }) {
   return {
-    contents: contents[location.href],
+    contents: parseContents(contents, location),
     permissions,
     canCreate: location.type === PATH && permissions.write
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createPrompt, movePrompt }, dispatch);
+  return bindActionCreators({ createPrompt, movePrompt, removeConfirm }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentsViewer);
