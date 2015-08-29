@@ -12,7 +12,7 @@ class FileEditor extends React.Component {
 
     if(fileEditor) {
       fileEditor.style.height = "5px";
-      fileEditor.style.height = (fileEditor.scrollHeight)+"px";
+      fileEditor.style.height = (fileEditor.scrollHeight + 25) + "px";
 
       if(!prevProps.file) {
         const fileEnd = this.props.file.text.length;
