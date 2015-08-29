@@ -1,13 +1,11 @@
 import React from 'react';
 import 'react/addons';
-import { connect } from 'react-redux';
-import { blur, remove } from '../actions/index';
 import { REMOVE } from '../constants/action-types';
 import { setSelectionRange } from '../utils';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-class ConfirmBar extends React.Component {
+export default class ConfirmBar extends React.Component {
   submit() {
     switch(this.props.confirm.type) {
       case REMOVE:
@@ -71,10 +69,3 @@ const styles = {
     boxShadow: '0px -2px 1px 1px rgba(150, 39, 27, 0.54)'
   }
 }
-
-
-function mapStateToProps({ confirm }) {
-  return { confirm };
-}
-
-export default connect(mapStateToProps, { blur, remove })(ConfirmBar);

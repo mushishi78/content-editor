@@ -1,13 +1,11 @@
 import React from 'react';
 import 'react/addons';
-import { connect } from 'react-redux';
-import { blur, create, move } from '../actions/index';
 import { CREATE, MOVE } from '../constants/action-types';
 import { setSelectionRange } from '../utils';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-class PromptBar extends React.Component {
+export default class PromptBar extends React.Component {
   setValue(e) { this.setState({ path: e.target.value }); }
   handleKeyDown(e) { if(e.key === 'Enter') { this.submit(); } }
 
@@ -86,8 +84,3 @@ const styles = {
     boxShadow: '0px -2px 1px 1px #2D6D98'
   }
 }
-
-function mapStateToProps({ prompt }) {
-  return { prompt };
-}
-export default connect(mapStateToProps, { blur, create, move })(PromptBar);

@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { setText } from '../actions/index';
 import { setSelectionRange } from '../utils';
 
-class FileEditor extends React.Component {
+export default class FileEditor extends React.Component {
   setText(e) { this.props.setText(e.target.value); }
 
   refreshFileEditor(prevProps = {}) {
@@ -48,8 +46,3 @@ const styles = {
     fontFamily: "'Ubuntu', sans-serif"
   }
 }
-
-function mapStateToProps({ file, permissions }) {
-  return { file, permissions };
-}
-export default connect(mapStateToProps, { setText })(FileEditor);

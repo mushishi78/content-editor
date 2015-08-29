@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { login } from '../actions/index';
 import { IN_PROGRESS } from '../constants/status-types';
 
-class LoginModal extends React.Component {
+export default class LoginModal extends React.Component {
   submit() { this.props.login(this.state); }
   change(e) { this.setState({ [e.target.id]: e.target.value }); }
   handleKeyDown(e) { if(e.key === 'Enter') { this.submit(); } }
@@ -64,5 +62,3 @@ const styles = {
     color: '#fff'
   }
 }
-
-export default connect(null, { login })(LoginModal);

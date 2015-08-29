@@ -1,11 +1,9 @@
 import React from 'react';
 import 'react/addons';
-import { connect } from 'react-redux';
-import { save } from '../actions/index';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-class SaveBar extends React.Component {
+export default class SaveBar extends React.Component {
   render() {
     return (
       <ReactCSSTransitionGroup transitionName='bottom-bar'>
@@ -35,9 +33,3 @@ const styles = {
     color: '#fff'
   }
 }
-
-function mapStateToProps({ file }) {
-  return { file };
-}
-
-export default connect(mapStateToProps, { save })(SaveBar);

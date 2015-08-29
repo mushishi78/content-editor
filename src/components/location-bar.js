@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import addressbar from 'addressbar';
-import { setLocation } from '../actions/index';
 
-class LocationBar extends React.Component {
+export default class LocationBar extends React.Component {
   componentDidMount() {
     addressbar.on('change', this.onUrlChange.bind(this));
     this.props.setLocation(addressbar.value.replace(location.origin, ''));
@@ -21,8 +19,3 @@ class LocationBar extends React.Component {
 
   render() { return null; }
 }
-
-function mapStateToProps({ location: { href } }) {
-  return { href };
-}
-export default connect(mapStateToProps, { setLocation })(LocationBar);

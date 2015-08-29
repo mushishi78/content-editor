@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { logout } from '../actions/index';
 
-class TopBar extends React.Component {
+export default class TopBar extends React.Component {
   render() {
     return !this.props.loggedIn ? null :
       <header style={styles.header}>
@@ -66,9 +64,3 @@ const styles = {
     float: 'right'
   }
 }
-
-function mapStateToProps({ loggedIn, location: { href } }) {
-  return { loggedIn, href };
-}
-
-export default connect(mapStateToProps, { logout })(TopBar);

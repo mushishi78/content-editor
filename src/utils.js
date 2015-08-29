@@ -1,5 +1,13 @@
 import { FAILED } from './constants/status-types';
 
+export function alphabetical(a, b) {
+  const lowerA = a.toLowerCase();
+  const lowerB = b.toLowerCase();
+  if(lowerA < lowerB) return -1;
+  if(lowerA > lowerB) return 1;
+  return 0
+}
+
 /* http://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings */
 export function atob(str) {
 	str = str.replace(/\s/g, '');

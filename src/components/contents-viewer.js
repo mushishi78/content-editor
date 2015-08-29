@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createPrompt, movePrompt, removeConfirm } from '../actions/index';
 import { CREATE, MOVE, REMOVE } from '../constants/action-types';
 import { PATH } from '../constants/location-types';
+import { alphabetical } from '../utils';
 
-class ContentsViewer extends React.Component {
+export default class ContentsViewer extends React.Component {
   parseContents() {
     const parent = this.props.location.href === '/' ? '' : this.props.location.href;
     const pattern = new RegExp(parent + '\\/[^\\/]+$');
@@ -21,15 +20,7 @@ class ContentsViewer extends React.Component {
   }
 
   order(a, b) {
-    return this.alphabetical(a.type, b.type) || this.alphabetical(a.label, b.label);
-  }
-
-  alphabetical(a, b) {
-    const lowerA = a.toLowerCase();
-    const lowerB = b.toLowerCase();
-    if(lowerA < lowerB) return -1;
-    if(lowerA > lowerB) return 1;
-    return 0
+    return alphabetical(a.type, b.type) || alphabetical(a.label, b.label);
   }
 
   render() {
@@ -128,12 +119,3 @@ const styles = {
     transition: 'all .1s ease-in'
   }
 }
-
-function mapStateToProps({ contents, location, permissions }) {
-  return { contents, location, permissions };
-}
-
-export default connect(
-  mapStateToProps,
-  { createPrompt, movePrompt, removeConfirm }
-)(ContentsViewer);

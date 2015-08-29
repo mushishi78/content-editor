@@ -1,7 +1,6 @@
 import React from 'react';
 import 'react/addons';
 import { FAILED } from '../constants/status-types';
-import { connect } from 'react-redux';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
