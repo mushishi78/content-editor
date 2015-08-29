@@ -37,7 +37,7 @@ describe('move', function() {
   });
 
   it('dispatches failed when github fails', function() {
-    this.github.move.rejects({ request: { statusText: 'Not Found' } });
+    this.github.move.rejects({ message: 'Not Found' });
     move(oldPath, newPath)(this.dispatch, this.getState);
     assert.deepEqual(this.dispatch.args[1][0], { type: MOVE, status: FAILED, flash: 'Not Found' });
   });

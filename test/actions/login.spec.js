@@ -76,7 +76,7 @@ describe('login', function() {
   });
 
   it('fails if credentials given but GitHub fails', function() {
-    this.github.repos.rejects({ request: { statusText: 'Not Authorized' } });
+    this.github.repos.rejects({ message: 'Not Authorized' });
     login({ username, password}, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
     assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });

@@ -9,7 +9,7 @@ import { OWNER, REPO, PATH } from '../../src/constants/location-types';
 sinonStubPromise(sinon);
 
 describe('load', function() {
-  const failReply = { request: { statusText: 'Not Found' } };
+  const failReply = { message: "Not Found" };
   const failAction = { type: LOAD, status: FAILED, flash: 'Not Found' };
 
   beforeEach(function() {

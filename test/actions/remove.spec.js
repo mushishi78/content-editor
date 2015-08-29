@@ -34,7 +34,7 @@ describe('remove', function() {
   });
 
   it('dispatches failed when github fails', function() {
-    this.github.remove.rejects({ request: { statusText: 'Not Found' } });
+    this.github.remove.rejects({ message: 'Not Found' });
     remove(path)(this.dispatch, this.getState);
     assert.deepEqual(this.dispatch.args[1][0], {
       type: REMOVE,

@@ -8,8 +8,11 @@ export function atob(str) {
 
 export function failed(dispatch, constant) {
   return err => {
-    const message = err.request && err.request.statusText || err.message;
+    const message = !err.request ? err.message :
+                      err.request.statusText + ': ' + JSON.parse(err.request.response).message
+
     dispatch({ type: constant, status: FAILED, flash: message });
+    console.log(message);
   };
 }
 
