@@ -91,13 +91,13 @@ const styles = {
   },
   nav: {
     display: 'inline-block',
-    width: '10%',
+    width: '15%',
     verticalAlign: 'top',
     textAlign: 'right'
   },
   ul: {
     display: 'inline-block',
-    width: '90%',
+    width: '85%',
     margin: '0',
     padding: '0'
   },
