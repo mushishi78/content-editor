@@ -8,7 +8,7 @@ import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types
 sinonStubPromise(sinon);
 
 describe('save', function() {
-  const location = { href: 'NeoDude/Lazerly/master/app.rb' },
+  const location = { href: '/NeoDude/Lazerly/master/app.rb' },
         comment  = 'Initial commit',
         text     = 'puts "Hello World!"';
 

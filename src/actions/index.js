@@ -11,3 +11,4 @@ export { default as removeConfirm } from './remove-confirm';
 export { default as save } from './save';
 export { default as setLocation } from './set-location';
 export { default as setText } from './set-text';
+export { default as upload } from './upload';

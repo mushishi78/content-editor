@@ -34,7 +34,8 @@ class App extends React.Component {
                                 permissions={this.props.permissions}
                                 createPrompt={this.props.createPrompt}
                                 movePrompt={this.props.movePrompt}
-                                removeConfirm={this.props.removeConfirm} />
+                                removeConfirm={this.props.removeConfirm}
+                                upload={this.props.upload} />
 
                 <FileEditor file={this.props.file}
                             permissions={this.props.permissions}

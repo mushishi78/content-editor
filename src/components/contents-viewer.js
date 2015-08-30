@@ -2,6 +2,7 @@ import React from 'react';
 import { CREATE, MOVE, REMOVE } from '../constants/action-types';
 import { PATH } from '../constants/location-types';
 import { alphabetical } from '../utils';
+import Uploader from './uploader';
 
 export default class ContentsViewer extends React.Component {
   parseContents() {
@@ -58,6 +59,7 @@ export default class ContentsViewer extends React.Component {
         {
           !canCreate ? null :
             <nav style={styles.nav}>
+              <Uploader upload={this.props.upload} />
               <i style={styles.icon}
                  className={icons.create}
                  onClick={this.props.createPrompt} />

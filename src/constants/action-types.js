@@ -10,3 +10,4 @@ export const REMOVE = 'Remove';
 export const SAVE = 'Save';
 export const SET_LOCATION = 'Set Location';
 export const SET_TEXT= 'Set Text';
+export const UPLOAD = 'Upload';
