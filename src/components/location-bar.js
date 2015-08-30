@@ -4,7 +4,7 @@ import addressbar from 'addressbar';
 export default class LocationBar extends React.Component {
   componentDidMount() {
     addressbar.on('change', this.onUrlChange.bind(this));
-    this.props.setLocation(addressbar.value.replace(location.origin, ''));
+    this.props.setLocation(this.decode(addressbar.value));
   }
 
   componentDidUpdate() {
@@ -14,7 +14,11 @@ export default class LocationBar extends React.Component {
 
   onUrlChange(event) {
     event.preventDefault();
-    this.props.setLocation(event.target.value.replace(location.origin, ''));
+    this.props.setLocation(this.decode(event.target.value));
+  }
+
+  decode(url) {
+    return decodeURIComponent(url.replace(location.origin, ''));
   }
 
   render() { return null; }
