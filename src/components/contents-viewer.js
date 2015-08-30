@@ -40,7 +40,7 @@ export default class ContentsViewer extends React.Component {
                     {label}
                   </a>
                   {
-                    type !== 'file' ? null :
+                    type !== 'file' || !this.props.permissions.write ? null :
                       <span style={styles.actions} className='contents-actions'>
                         <i style={styles.icon}
                            className={icons.move}
