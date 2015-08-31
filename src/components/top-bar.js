@@ -10,7 +10,7 @@ export default class TopBar extends React.Component {
           {this.logout()}
         </nav>
         {this.iconLink('/', icons.home)}
-        {this.props.href ? this.breadcrumbs() : null}
+        {this.breadcrumbs(this.props.href || '')}
       </header>
   }
 
@@ -32,8 +32,8 @@ export default class TopBar extends React.Component {
     );
   }
 
-  breadcrumbs() {
-    return this.props.href.split('/').map((label, i, array) => {
+  breadcrumbs(href) {
+    return href.split('/').map((label, i, array) => {
       return !label ? null :
         <span style={styles.breadcrumb} key={i}>
           <a href={array.slice(0, i + 1).join('/')} style={styles.a}>{label}</a>
