@@ -35,7 +35,9 @@ export function isArray(arg) {
 }
 
 /* http://stackoverflow.com/questions/17858174/set-cursor-to-specific-position-on-specific-line-in-a-textarea */
-export function setSelectionRange(input, selectionStart, selectionEnd) {
+export function setSelection(input, selectionStart, selectionEnd) {
+  selectionEnd = selectionEnd || selectionStart;
+
   if (input.setSelectionRange) {
     input.focus();
     input.setSelectionRange(selectionStart, selectionEnd);

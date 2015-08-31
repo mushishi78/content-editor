@@ -1,5 +1,5 @@
 import React from 'react';
-import { setSelectionRange } from '../utils';
+import { setSelection } from '../utils';
 
 export default class FileEditor extends React.Component {
   setText(e) { this.props.setText(e.target.value); }
@@ -12,8 +12,7 @@ export default class FileEditor extends React.Component {
       fileEditor.style.height = (fileEditor.scrollHeight + 25) + "px";
 
       if(!prevProps.file) {
-        const fileEnd = this.props.file.text.length;
-        setSelectionRange(fileEditor, fileEnd, fileEnd);
+        setSelection(fileEditor, fileEditor.value.length);
       }
     }
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react/addons';
 import { CREATE, MOVE } from '../constants/action-types';
-import { setSelectionRange } from '../utils';
+import { setSelection } from '../utils';
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
@@ -25,18 +25,7 @@ export default class PromptBar extends React.Component {
   componentDidUpdate(prevProps, prevSate) {
     if(prevProps.prompt !== this.props.prompt && this.props.prompt) {
       const pathInput = React.findDOMNode(this.refs.pathInput);
-      pathInput.focus();
-
-      if(this.props.prompt.type === CREATE) {
-        this.selectUntitled(pathInput);
-      }
-    }
-  }
-
-  selectUntitled(pathInput) {
-    const index = this.props.prompt.path.search('untitled');
-    if(index >= 0) {
-      setSelectionRange(pathInput, index, index + 'untitled'.length);
+      setSelection(pathInput, pathInput.value.length);
     }
   }
 
