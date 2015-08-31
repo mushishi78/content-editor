@@ -4,24 +4,30 @@ export default class TopBar extends React.Component {
   render() {
     return !this.props.loggedIn ? null :
       <header style={styles.header}>
-        {this.logout()}
-        {this.home()}
+        <nav style={styles.nav}>
+          {this.iconLink('/mushishi78/content-editor/docs', icons.docs)}
+          {this.iconLink('https://github.com/mushishi78/content-editor', icons.github)}
+          {this.logout()}
+        </nav>
+        {this.iconLink('/', icons.home)}
         {this.props.href ? this.breadcrumbs() : null}
       </header>
   }
 
-  logout() {
-    return(
-      <a onClick={this.props.logout.bind(this, undefined)} href='javascript:void(0)' style={styles.logout}>
-        <i style={styles.icon} className='octicon octicon-log-out' />
+  iconLink(href, icon) {
+    return (
+      <a href={href} style={styles.a}>
+        <i style={styles.icon} className={icon} />
       </a>
     );
   }
 
-  home() {
-    return (
-      <a href='/' style={styles.a}>
-        <i style={styles.icon} className='octicon octicon-home' />
+  logout() {
+    return(
+      <a onClick={this.props.logout.bind(this, undefined)}
+         href='javascript:void(0)'
+         style={styles.logout}>
+        <i style={styles.icon} className={icons.logout} />
       </a>
     );
   }
@@ -37,12 +43,23 @@ export default class TopBar extends React.Component {
   }
 }
 
+const icons = {
+  home: 'octicon octicon-home',
+  logout: 'octicon octicon-log-out',
+  docs: 'octicon octicon-info',
+  github: 'octicon octicon-mark-github'
+}
+
 const styles = {
   header: {
     background: '#fff',
     fontSize: '1.5em',
     padding: '0.3em',
     boxShadow: '0 1px 1px 1px rgba(0,0,0,0.5)'
+  },
+
+  nav: {
+    float: 'right'
   },
 
   a: {
@@ -58,9 +75,5 @@ const styles = {
     fontSize: '1em',
     color: '#34495e',
     padding: '0.05em 0.2em'
-  },
-
-  logout: {
-    float: 'right'
   }
 }
