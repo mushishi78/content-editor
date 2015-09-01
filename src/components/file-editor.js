@@ -84,7 +84,7 @@ const styles = {
   },
   nav: {
     textAlign: 'right',
-     padding: '0 1%'
+    padding: '0 1%'
   },
   icon: {
     fontSize: '1.5em',
@@ -93,7 +93,7 @@ const styles = {
     cursor: 'pointer'
   },
   textarea: {
-    margin: '0 auto',
+    margin: '0 auto 100px',
     border: 'none',
     color: '#333',
     padding: '5px 2%',
