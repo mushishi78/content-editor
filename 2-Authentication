@@ -3,8 +3,8 @@
 
 When first navigating to Content Editor, users are directed to login with their GitHub username and password. This is so requests can be made to the GitHub API on the user's behalf using BASIC authentication. As Content Editor is a static website these credentials are sent directly from the user's computer to the GitHub servers over HTTPS without intermediary, so the user's credentials are entirely secure and never exposed to a third-party.
 
-It is understood for some people it would preferential to use OAuth authentication rather than BASIC authentication. However, this would require Content Editor to run a server for the sole purpose of authentication and slowing down the user experience by waiting on this server to authenticate requests to GitHub. If you are concerned about security, feel free to go through the source code for [Content Editor][GitHub].
+It is understood for some people it would find it preferential to use OAuth authentication, rather than BASIC authentication. However, this would require Content Editor to run a server for the sole purpose of authentication and would slow down the user experience by waiting on this server to authenticate requests to GitHub. In the interests of security, technical users are encouraged to go through the source code for [Content Editor on GitHub][] to ensure there is nothing to be concerned about.
 
 To save users from typing in their credentials every time they use Content Editor, their credentials are stored using their browser's `localStorage` feature, which keeps them on the user's computer. As Content Editor is served exclusively over HTTPS only Content Editor itself has access to the stored credentials.
 
-[GitHub]: (https://github.com/mushishi78/content-editor)
+[Content Editor on GitHub]: (https://github.com/mushishi78/content-editor)
