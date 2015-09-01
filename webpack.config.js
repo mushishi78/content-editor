@@ -7,7 +7,8 @@ module.exports = getConfig({
   html: function (data) {
     return {
       'index.html': html(data),
-      '200.html': html(data)
+      '200.html': html(data),
+      '404.html': html(data)
     }
   }
 });
