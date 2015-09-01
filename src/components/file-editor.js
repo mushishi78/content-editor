@@ -8,7 +8,8 @@ export default class FileEditor extends React.Component {
     return React.findDOMNode(this.refs.fileEditor);
   }
 
-  setHeight(fileEditor, offset = 0) {
+  setHeight(fileEditor) {
+    const offset = fileEditor.style.height ? 0 : 70;
     fileEditor.style.height = "5px";
     fileEditor.style.height = (fileEditor.scrollHeight + offset) + "px";
   }
@@ -28,7 +29,7 @@ export default class FileEditor extends React.Component {
     const fileEditor = this.getFileEditor();
 
     if(fileEditor) {
-      this.setHeight(fileEditor, 25);
+      this.setHeight(fileEditor);
       this.setCursor(fileEditor);
     }
   }
