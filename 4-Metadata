@@ -1,17 +1,45 @@
-4 - Front Matter
-=============
+4 - Metadata
+==========
+
+Front Matter
+-----------------
 
 It is common for content files to place metadata at the top of a file. This is referred to as the files Front Matter. For example, a file may start like this:
 
     ---
-      title: Blogging is 4 Life
-      date: 2015-09-01 00:00:00
-      author: PJay
-      tags: [Lifestyle, Thoughts]
+    title: Blogging is 4 Life
+    date: 2015-09-01
+    author: Christopher
+    tags: [Lifestyle, Thoughts]
     ---
 
-    The content of the file would follow here......
+This would inform any program that uses this content file, like a static-site generator, that this post is entitled "Blogging is 4 Life", was written by Christopher on 1st September 2015 and could be related to other posts that are also tagged "Lifestyle" or "Thoughts".
 
-This would inform any program that uses this content file, like a static-site generator, that this post is entitled "Blogging is 4 Life", was written by PJay on 1st September 2015 and could be related to other posts that are also tagged "Lifestyle" or "Thoughts".
+This example uses the YAML format with 3 dashes to delineate the start and end of the Front Matter. This is a popular format but there are many others that may be prefered by different generators.
 
-This example uses the YAML format with 3 dashes to delineate the start and end of the Front Matter.
+For instance, the same metadata with JSON formatting could be written as:
+
+    ;;;
+    "title": "Blogging is 4 Life",
+    "date": "2015-09-01",
+    "author": "Christopher"
+    "tags": ["Lifestyle", "Thoughts"]
+    ;;;
+
+Or with TOML:
+
+    +++
+    title="Blogging is 4 Life"
+    date="2015-09-01"
+    author="Christopher"
+    tags=["Lifestyle", "Thoughts"]
+    +++
+
+Or in reStructuredText:
+
+    Blogging is 4 Life
+    ##############
+
+    :date: 2015-09-01
+    :author: Christopher
+    :tags: Lifestyle, Thoughts
