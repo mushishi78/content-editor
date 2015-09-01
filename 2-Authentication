@@ -1,5 +1,5 @@
-2 - Authentication
-===============
+2 - Authentication and Security
+=========================
 
 When first navigating to Content Editor, users are directed to login with their GitHub username and password. This is so requests can be made to the GitHub API on the user's behalf using BASIC authentication. As Content Editor is a static website these credentials are sent directly from the user's computer to the GitHub servers over HTTPS without intermediary, so the user's credentials are entirely secure and never exposed to a third-party.
 
