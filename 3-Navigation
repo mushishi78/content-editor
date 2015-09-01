@@ -1,7 +1,7 @@
 3 - Navigation
 ===========
 
-Content Editor uses the following format for URLs that reflects GitHub's own organisation of repositories:
+Content Editor uses the following format for URLs, reflecting GitHub's own organisation of repositories:
 
     https://content-editor.surge.sh/:owner:/:repo:/:branch:/:path
 
