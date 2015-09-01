@@ -1,7 +1,7 @@
 3 - Navigation
 ===========
 
-Content Editor uses the following format for URLs, that reflects GitHub's own organisation of repositories:
+Content Editor uses the following format for URLs that reflects GitHub's own organisation of repositories:
 
     https://content-editor.surge.sh/:owner:/:repo:/:branch:/:path
 
@@ -15,4 +15,4 @@ Take this URL for an example:
 
     https://content-editor.surge.sh/facebook/react/master/docs/_posts/2013-06-05-why-react.md
 
-From the URL, you can see that it is a file on the master branch of the React repository that's owned by Facebook. 
+From the URL, you can see that it is a file on the master branch of the React repository that's owned by Facebook.
