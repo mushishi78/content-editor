@@ -3,8 +3,8 @@
 
 When first navigating to Content Editor, users are directed to login with their GitHub username and password. This is so requests can be made to the GitHub API on the user's behalf using BASIC authentication. As Content Editor is a static website these credentials are sent directly from the user's computer to the GitHub servers over HTTPS without intermediary, so the user's credentials are entirely secure and never exposed to a third-party.
 
-Content Editor prefers BASIC authentication to OAuth, as the latter would require Content Editor to run a server for the sole purpose of authentication and would slow down the user experience by waiting on this server to authenticate requests to GitHub. The drawback is that this entails giving Content Editor a certain amount of trust that it does not abuse the slightly more permissive system. For re-assurance, technical users are encouraged to go through the source code for [Content Editor on GitHub][] to allay any concerns of possible abuses.
+Content Editor prefers BASIC authentication to OAuth, as the latter would require Content Editor to run a server for the sole purpose of authentication and would slow down the user experience by waiting on this server to authenticate requests to GitHub. The drawback is that this entails giving Content Editor a certain amount of trust that it does not abuse the slightly more permissive system. For re-assurance, technical users are encouraged to go through the source code for [Content Editor on GitHub][1] to allay any concerns of possible abuses.
 
 To save users from typing in their credentials every time they use Content Editor, their credentials are stored using their browser's `localStorage` feature, which saves them on the user's computer. As Content Editor is served exclusively over HTTPS only Content Editor itself has access to the stored credentials. Content Editor is also careful not to execute any user provided code that would leave these credentials open to XSS attacks.
 
-[Content Editor on GitHub]: (https://github.com/mushishi78/content-editor)
+[1]: (https://github.com/mushishi78/content-editor)
