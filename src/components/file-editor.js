@@ -4,25 +4,65 @@ import { setSelection } from '../utils';
 export default class FileEditor extends React.Component {
   setText(e) { this.props.setText(e.target.value); }
 
-  refreshFileEditor(prevProps = {}) {
-    const fileEditor = React.findDOMNode(this.refs.fileEditor);
+  getFileEditor() {
+    return React.findDOMNode(this.refs.fileEditor);
+  }
+
+  setHeight(fileEditor, offset = 0) {
+    fileEditor.style.height = "5px";
+    fileEditor.style.height = (fileEditor.scrollHeight + offset) + "px";
+  }
+
+  setCursor(fileEditor) {
+    setSelection(fileEditor, fileEditor.value.length);
+  }
+
+  setWidth(fileEditor, change) {
+    let width = parseInt(fileEditor.style.width.match(/\d+/));
+    width = Math.max(Math.min(width + change, 85), 25);
+    fileEditor.style.width = (width + change) + "%";
+    this.setHeight(fileEditor);
+  }
+
+  componentDidMount() {
+    const fileEditor = this.getFileEditor();
 
     if(fileEditor) {
-      fileEditor.style.height = "5px";
-      fileEditor.style.height = (fileEditor.scrollHeight + 25) + "px";
-
-      if(!prevProps.file) {
-        setSelection(fileEditor, fileEditor.value.length);
-      }
+      this.setHeight(fileEditor, 25);
+      this.setCursor(fileEditor);
     }
   }
 
-  componentDidMount()           { this.refreshFileEditor(); }
-  componentDidUpdate(prevProps) { this.refreshFileEditor(prevProps); }
+  componentDidUpdate(prevProps) {
+    const fileEditor = this.getFileEditor();
+
+    if(fileEditor) {
+      this.setHeight(fileEditor);
+      if(!prevProps.file) { this.setCursor(fileEditor); }
+    }
+  }
+
+  narrow() {
+    const fileEditor = this.getFileEditor();
+    if(fileEditor) { this.setWidth(fileEditor, -10); }
+  }
+
+  wide() {
+    const fileEditor = this.getFileEditor();
+    if(fileEditor) { this.setWidth(fileEditor, 10); }
+  }
 
   render() {
     return !this.props.file ? null :
-      <div>
+      <div style={styles.div}>
+        <nav style={styles.nav}>
+          <i onClick={this.narrow.bind(this)}
+             className={icons.narrow}
+             style={styles.icon} />
+          <i onClick={this.wide.bind(this)}
+             className={icons.wide}
+             style={styles.icon} />
+        </nav>
         <textarea style={styles.textarea}
                   value={this.props.file.text}
                   onChange={this.setText.bind(this)}
@@ -32,13 +72,32 @@ export default class FileEditor extends React.Component {
   }
 }
 
+
+const icons = {
+  narrow: 'octicon octicon-dash',
+  wide: 'octicon octicon-plus'
+}
+
 const styles = {
+  div: {
+    textAlign: 'center'
+  },
+  nav: {
+    textAlign: 'right',
+     padding: '0 1%'
+  },
+  icon: {
+    fontSize: '1.5em',
+    margin: '0.3em',
+    color: '#C1E6FF',
+    cursor: 'pointer'
+  },
   textarea: {
-    margin: '10px 1% 100px',
+    margin: '0 auto',
     border: 'none',
     color: '#333',
     padding: '5px 2%',
-    width: '94%',
+    width: '85%',
     borderRadius: '10px',
     fontSize: '1.3em',
     boxShadow: '0 0 2px 2px rgba(0,0,0,0.5)',

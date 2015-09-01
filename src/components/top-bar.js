@@ -25,8 +25,7 @@ export default class TopBar extends React.Component {
   logout() {
     return(
       <a onClick={this.props.logout.bind(this, undefined)}
-         href='javascript:void(0)'
-         style={styles.logout}>
+         href='javascript:void(0)'>
         <i style={styles.icon} className={icons.logout} />
       </a>
     );
