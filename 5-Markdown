@@ -33,7 +33,7 @@ Heading 2
 [Inline-style link](https://www.google.com)
 [Inline-style link with title](https://www.google.com "Google's Homepage")
 [Reference-style link][1]
-[Link text itself].
+[Link text as reference].
 <http://www.show-the-link.com>
 
 ![Alternative text for image](https://my-images.com/my-image.png "This is the image title-text")
@@ -50,4 +50,4 @@ console.log('Or use three backticks to delineate the start and end of the code.'
 ```
 
 [1]: http://slashdot.org
-[Link text itself]: http://www.reddit.com
+[Link text as reference]: http://www.reddit.com
