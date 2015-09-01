@@ -1,0 +1,32 @@
+5 - Markdown
+===========
+
+Markdown is a simple syntax for marking up content with rich text features such headings, lists and hyperlinks. Although there are alternative file formats, such as Asciidoc, Textile or reStructuredText, Markdown is the most popular and has been used on many well known site such as GitHub, Reddit, and Stack Exchange.
+
+The following is a brief cheat sheet of the syntax that can be used for reference:
+
+Heading 1
+========
+Heading 2
+--------------
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+*Italics* or _Italics_
+**Bold** or __Bold__
+~~Strikethrough~~
+
+1. Numbered list
+2. With multiple items
+  1. Sub-lists for breaking down points
+
+* Unordered list
+* With bullet points
+  + Can use plus symbols
+  + Which can make it easier to delineate sub-lists
+    - Or dashes too
+
