@@ -30,3 +30,24 @@ Heading 2
   + Which can make it easier to delineate sub-lists
     - Or dashes too
 
+[Inline-style link](https://www.google.com)
+[Inline-style link with title](https://www.google.com "Google's Homepage")
+[Reference-style link][1]
+[Link text itself].
+<http://www.show-the-link.com>
+
+![Alternative text for image](https://my-images.com/my-image.png "This is the image title-text")
+
+> Block quotes can be used to say things,
+> that are really memorable.
+
+    <body>
+      <p>To format code examples,  either indent the code four spaces</p>
+    </body>
+
+```
+console.log('Or use three backticks to delineate the start and end of the code.');
+```
+
+[1]: http://slashdot.org
+[Link text itself]: http://www.reddit.com
