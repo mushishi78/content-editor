@@ -1,4 +1,5 @@
 export { default as blur } from './blur';
+export { default as changeEditorWidth } from './change-editor-width';
 export { default as create } from './create';
 export { default as createPrompt } from './create-prompt';
 export { default as load } from './load';

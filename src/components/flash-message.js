@@ -19,20 +19,13 @@ export default class FlashMessage extends React.Component {
 
   divWrapperStyle() {
     return {
-      color: '#ecf0f1',
-      textAlign: 'center',
-      overflow: 'hidden',
-      fontSize: '2em',
-      transition: 'all .3s ease-in',
-      width: '100%',
+      ...styles.divWrapper,
       background: this.props.status.type === FAILED ? '#e74c3c' : '#2ecc71'
     };
   }
 
-  iconClass() {
-    return this.props.status.type === FAILED ?
-      'octicon octicon-alert' :
-      'octicon octicon-check';
+  icon() {
+    return this.props.status.type === FAILED ? icons.failed : icons.success;
   }
 
   render() {
@@ -42,7 +35,7 @@ export default class FlashMessage extends React.Component {
           !this.state.show ? null :
             <div style={this.divWrapperStyle()} className='flash' key='flash'>
               <div style={styles.div}>
-                <i style={styles.icon} className={this.iconClass()} />
+                <i style={styles.icon} className={this.icon()} />
                 {this.props.status.flash}
               </div>
             </div>
@@ -52,7 +45,20 @@ export default class FlashMessage extends React.Component {
   }
 }
 
+const icons = {
+  failed: 'octicon octicon-alert',
+  success: 'octicon octicon-check'
+}
+
 const styles = {
+  divWrapper: {
+    color: '#ecf0f1',
+    textAlign: 'center',
+    overflow: 'hidden',
+    fontSize: '2em',
+    transition: 'all .3s ease-in',
+    width: '100%'
+  },
   div: {
     margin: '0.25em 0'
   },

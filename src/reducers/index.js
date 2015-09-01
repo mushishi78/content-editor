@@ -1,5 +1,6 @@
 export { default as contents } from './contents';
 export { default as confirm } from './confirm';
+export { default as editorWidth } from './editor-width';
 export { default as file } from './file';
 export { default as github } from './github';
 export { default as loaded } from './loaded';

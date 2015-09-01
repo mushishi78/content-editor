@@ -1,5 +1,6 @@
 import React from 'react';
 import { setSelection } from '../utils';
+import { INCREMENT, DECREMENT } from '../constants/directions';
 
 export default class FileEditor extends React.Component {
   setText(e) { this.props.setText(e.target.value); }
@@ -48,28 +49,26 @@ export default class FileEditor extends React.Component {
     }
   }
 
-  narrow() {
-    const fileEditor = this.getFileEditor();
-    if(fileEditor) { this.setWidth(fileEditor, -10); }
-  }
-
-  wide() {
-    const fileEditor = this.getFileEditor();
-    if(fileEditor) { this.setWidth(fileEditor, 10); }
+  textareaStyle() {
+    return {
+      ...styles.textarea,
+      width: this.props.editorWidth + '%',
+      marginBottom: this.props.file.changed ? '100px' : '0px'
+    }
   }
 
   render() {
     return !this.props.file ? null :
       <div style={styles.div}>
         <nav style={styles.nav}>
-          <i onClick={this.narrow.bind(this)}
+          <i onClick={this.props.changeEditorWidth.bind(this, DECREMENT)}
              className={icons.narrow}
              style={styles.icon} />
-          <i onClick={this.wide.bind(this)}
+          <i onClick={this.props.changeEditorWidth.bind(this, INCREMENT)}
              className={icons.wide}
              style={styles.icon} />
         </nav>
-        <textarea style={styles.textarea}
+        <textarea style={this.textareaStyle()}
                   value={this.props.file.text}
                   onChange={this.setText.bind(this)}
                   disabled={!this.props.permissions.write}
@@ -99,11 +98,10 @@ const styles = {
     cursor: 'pointer'
   },
   textarea: {
-    margin: '0 auto 100px',
+    margin: '0 auto',
     border: 'none',
     color: '#333',
     padding: '5px 2%',
-    width: '85%',
     borderRadius: '10px',
     fontSize: '1.3em',
     boxShadow: '0 0 2px 2px rgba(0,0,0,0.5)',

@@ -39,7 +39,9 @@ class App extends React.Component {
 
                 <FileEditor file={this.props.file}
                             permissions={this.props.permissions}
-                            setText={this.props.setText} />
+                            editorWidth={this.props.editorWidth}
+                            setText={this.props.setText}
+                            changeEditorWidth={this.props.changeEditorWidth} />
 
                 <footer style={styles.footer}>
                   <SaveBar file={this.props.file}

@@ -1,4 +1,5 @@
 export const BLUR = 'Blur';
+export const CHANGE_EDITOR_WIDTH = 'Change Editor Width';
 export const CONFIRM = 'Confirm';
 export const CREATE = 'Create';
 export const LOAD = 'Load';
