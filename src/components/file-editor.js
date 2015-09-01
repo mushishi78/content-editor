@@ -9,9 +9,12 @@ export default class FileEditor extends React.Component {
   }
 
   setHeight(fileEditor) {
-    const offset = fileEditor.style.height ? 0 : 70;
-    fileEditor.style.height = "5px";
-    fileEditor.style.height = (fileEditor.scrollHeight + offset) + "px";
+    const changeHeight = () => {
+      fileEditor.style.height = "5px";
+      fileEditor.style.height = (fileEditor.scrollHeight) + "px";
+    };
+    if(fileEditor.style.height) { changeHeight(); }
+    else { setTimeout(changeHeight, 150); }
   }
 
   setCursor(fileEditor) {
