@@ -11,10 +11,10 @@ export default class FileEditor extends React.Component {
 
   setHeight(fileEditor) {
     const changeHeight = () => {
-      const scrollTop = document.body.scrollTop;
+      const scrollTop = document.documentElement.scrollTop;
       fileEditor.style.height = "5px";
       fileEditor.style.height = (fileEditor.scrollHeight) + "px";
-      document.body.scrollTop = scrollTop;
+      document.documentElement.scrollTop = scrollTop;
     };
     if(fileEditor.style.height) { changeHeight(); }
     else { setTimeout(changeHeight, 150); }
