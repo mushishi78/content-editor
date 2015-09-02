@@ -1,6 +1,6 @@
 {
   "name": "content-editor",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "devDependencies": {
     "addressbar": "^0.1.15",
     "autoprefixer-core": "^5.2.1",
