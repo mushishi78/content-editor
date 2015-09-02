@@ -1,4 +1,47 @@
-Firefox seems to be au fait with it
-==========================
+Let's do this, Safari Styley
+====================
 
-Though I could make more stringent tests, I'm sure *someone* will make an issue if there's a problem.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Can you handle this? Nope, nope this is bad!
