@@ -12,17 +12,16 @@ export default class LoginModal extends React.Component {
 
         <input type='text'
                style={styles.input}
-               placeholder='GitHub Username'
+               placeholder='GitHub Personal Access Token'
                onChange={this.change.bind(this)}
                onKeyDown={this.handleKeyDown.bind(this)}
-               id='username'/>
+               id='accessToken'/>
 
-        <input type='password'
-               style={styles.input}
-               placeholder='GitHub Password'
-               onChange={this.change.bind(this)}
-               onKeyDown={this.handleKeyDown.bind(this)}
-               id='password'/>
+        <a href='https://help.github.com/articles/creating-an-access-token-for-command-line-use//#creating-a-token'
+           target='_blank'
+           style={styles.a}>
+          What is this?
+        </a>
 
         <button style={{ ...styles.input, ...styles.button }}
                 onClick={this.submit.bind(this)}>Login</button>
@@ -34,13 +33,12 @@ export default class LoginModal extends React.Component {
 
 const styles = {
   section: {
-    position: 'absolute',
-    zIndex: '2',
-    margin: '20% 35%',
-    padding: '2%',
+    margin: '150px auto',
+    padding: '30px',
     background: '#ecf0f1',
     borderRadius: '10px',
-    fontSize: '1.4em'
+    fontSize: '1.4em',
+    width: '15em'
   },
 
   heading: {
@@ -52,9 +50,15 @@ const styles = {
   input: {
     width: '100%',
     padding: '0.5em 0',
-    margin: '0.5em 0',
+    marginTop: '1em',
     textAlign: 'center',
     borderRadius: '5px'
+  },
+
+  a: {
+    display: 'block',
+    fontSize: '0.7em',
+    textAlign: 'right'
   },
 
   button: {

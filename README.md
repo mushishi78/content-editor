@@ -7,14 +7,10 @@ With the growth in popularity of static-site generators, it is often desirable t
 
 Content Editor tries to plug this gap by providing a user experience that is simple and responsive, whilst at the same time respecting the difference between these architectures. There are a plethora of static-site generators: Jekyll, Hexo, Hugo, Pelican, Middleman, Metalsmith, Harp, Docpad...etc each with their own ideas about the best ways to store content. By default, Content Editor simply provides a direct text editor for content without trying to be too clever with assumptions on how the files are formatted.
 
-Authentication and Security
----------------------------
+Personal Access Token
+---------------------
 
-When first navigating to Content Editor, users are directed to login with their GitHub username and password. This is so requests can be made to the GitHub API on the user's behalf using BASIC authentication. As Content Editor is a static website these credentials are sent directly from the user's computer to the GitHub servers over HTTPS without intermediary, so the user's credentials are entirely secure and never exposed to a third-party.
-
-Content Editor prefers BASIC authentication to OAuth, as the latter would require Content Editor to run a server for the sole purpose of authentication and would slow down the user experience by waiting on this server to authenticate requests to GitHub. The drawback is that this entails giving Content Editor a certain amount of trust that it does not abuse the slightly more permissive system. For re-assurance, technical users are encouraged to go through the source code for Content Editor on GitHub to allay any concerns of possible abuses.
-
-To save users from typing in their credentials every time they use Content Editor, their credentials are stored using their browser's `localStorage` feature, which saves them on the user's computer. As Content Editor is served exclusively over HTTPS only Content Editor itself has access to the stored credentials. Content Editor is also careful not to execute any user provided code that would leave these credentials open to XSS attacks.
+Content Editor uses personal access tokens to authenticate requests to GitHub on a user's behalf. This tokens allow users to grant specific access permissions and to revoke access at any time. To create a token, follow the [instructions provided by GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use/#creating-a-token).
 
 Navigation
 ----------

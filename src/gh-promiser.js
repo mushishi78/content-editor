@@ -1,8 +1,8 @@
 import _GitHub from 'github-api';
 import denodeify from 'denodeify';
 
-export default function GHPromiser(username, password, GitHub = _GitHub) {
-  const github = new GitHub({ username, password, auth: "basic" });
+export default function GHPromiser(accessToken, GitHub = _GitHub) {
+  const github = new GitHub({ token: accessToken, auth: 'OAUTH_TOKEN' });
 
   return {
     contents: denodeify(({ owner, repo, branch, path = '' }, callback) => {

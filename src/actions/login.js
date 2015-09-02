@@ -4,15 +4,14 @@ import { IN_PROGRESS, COMPLETED, FAILED } from '../constants/status-types';
 import _load from './load';
 import { failed } from '../utils';
 
-export default function login({ username, password } = {}, GHPromiser = _GHPromiser, load = _load, storage = localStorage) {
+export default function login({ accessToken } = {}, GHPromiser = _GHPromiser, load = _load, storage = localStorage) {
   return dispatch => {
-    username = backup('username', username, storage);
-    password = backup('password', password, storage);
+    accessToken = backup('accessToken', accessToken, storage);
 
-    if(username && password) {
+    if(accessToken) {
       dispatch({ type: LOGIN, status: IN_PROGRESS });
 
-      const github = GHPromiser(username, password);
+      const github = GHPromiser(accessToken);
       github.repos().then(completed(dispatch, github, load)).catch(failed(dispatch, LOGIN));
     }
   }
