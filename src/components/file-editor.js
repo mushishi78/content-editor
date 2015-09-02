@@ -51,10 +51,18 @@ export default class FileEditor extends React.Component {
 
   componentDidUpdate(prevProps) {
     const fileEditor = this.getFileEditor();
+    const fileChanged = this.props.file && this.props.file.changed;
+    const prevFileChanged = prevProps.file && prevProps.file.changed;
 
     if(fileEditor) {
       this.setHeight(fileEditor);
       if(!prevProps.file) { this.setCursor(fileEditor); }
+    }
+
+    if(fileChanged && !prevFileChanged) {
+      this.setScrollTop(this.getScrollTop() + 100);
+    } else if(!fileChanged && prevFileChanged) {
+      this.setScrollTop(this.getScrollTop() - 100);
     }
   }
 
