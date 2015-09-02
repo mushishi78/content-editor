@@ -10,7 +10,7 @@ Content Editor tries to plug this gap by providing a user experience that is sim
 Personal Access Token
 ---------------------
 
-Content Editor uses personal access tokens to authenticate requests to GitHub on a user's behalf. This tokens allow users to grant specific access permissions and to revoke access at any time. To create a token, follow the [instructions provided by GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use/#creating-a-token).
+Content Editor uses personal access tokens to authenticate requests to GitHub on a user's behalf. These tokens allow users to grant specific access permissions and to revoke access at any time. To create a token, follow the [instructions provided by GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use/#creating-a-token).
 
 Navigation
 ----------
