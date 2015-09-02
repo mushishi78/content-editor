@@ -8,8 +8,7 @@ import { IN_PROGRESS, COMPLETED, FAILED } from '../../src/constants/status-types
 sinonStubPromise(sinon);
 
 describe('login', function() {
-  const username = 'FrnkY89',
-        password = 'LemonPops';
+  const accessToken = 'RE54644646D5';
 
   const githubRepos = [
     { full_name: 'NeoDude/Lazerly', stars: 2 },
@@ -22,32 +21,21 @@ describe('login', function() {
     this.dispatch = sinon.spy();
     this.load = () => 'load';
     this.github = { repos: sinon.stub().returnsPromise() };
-    this.GHPromiser = sinon.stub().withArgs(username, password).returns(this.github);
+    this.GHPromiser = sinon.stub().withArgs(accessToken).returns(this.github);
     this.storage = { getItem: sinon.stub(), setItem: sinon.spy(), removeItem: sinon.spy() };
   });
 
-  it('ignores if credentials not given or stored', function() {
+  it('ignores if accessToken not given or stored', function() {
     login({}, this.GHPromiser, this.load, this.storage)(this.dispatch)
     assert(this.dispatch.notCalled)
   });
 
-  it('ignores if only username given', function() {
-    login({ username }, this.GHPromiser, this.load, this.storage)(this.dispatch)
-    assert(this.dispatch.notCalled)
-  });
-
-  it('ignores if only password given', function() {
-    login({ password }, this.GHPromiser, this.load, this.storage)(this.dispatch)
-    assert(this.dispatch.notCalled)
-  });
-
-  it('stores, dispatches and loads if credentials given and GitHub returns repos', function() {
+  it('stores, dispatches and loads if accessToken given and GitHub returns repos', function() {
     this.github.repos.resolves(githubRepos);
 
-    login({ username, password}, this.GHPromiser, this.load, this.storage)(this.dispatch);
+    login({ accessToken }, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
-    assert.deepEqual(this.storage.setItem.args[0], ['username', username]);
-    assert.deepEqual(this.storage.setItem.args[1], ['password', password]);
+    assert.deepEqual(this.storage.setItem.args[0], ['accessToken', accessToken]);
     assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
       type: LOGIN,
@@ -58,9 +46,8 @@ describe('login', function() {
     assert.equal(this.dispatch.args[2][0], 'load');
   });
 
-  it('dispatches and loads if credentials stored and GitHub returns repos', function() {
-    this.storage.getItem.withArgs('username').returns(username);
-    this.storage.getItem.withArgs('password').returns(password);
+  it('dispatches and loads if accessToken stored and GitHub returns repos', function() {
+    this.storage.getItem.withArgs('accessToken').returns(accessToken);
     this.github.repos.resolves(githubRepos);
 
     login({}, this.GHPromiser, this.load, this.storage)(this.dispatch);
@@ -75,9 +62,9 @@ describe('login', function() {
     assert.equal(this.dispatch.args[2][0], 'load');
   });
 
-  it('fails if credentials given but GitHub fails', function() {
+  it('fails if accessToken given but GitHub fails', function() {
     this.github.repos.rejects({ message: 'Not Authorized' });
-    login({ username, password }, this.GHPromiser, this.load, this.storage)(this.dispatch);
+    login({ accessToken }, this.GHPromiser, this.load, this.storage)(this.dispatch);
 
     assert.deepEqual(this.dispatch.args[0][0], { type: LOGIN, status: IN_PROGRESS });
     assert.deepEqual(this.dispatch.args[1][0], {
@@ -86,10 +73,9 @@ describe('login', function() {
     assert(this.dispatch.calledTwice);
   });
 
-  it('undefined credentials remove from storage', function() {
+  it('accessToken undefined remove from storage', function() {
     login({}, this.GHPromiser, this.load, this.storage)(this.dispatch);
     assert(this.storage.setItem.notCalled);
-    assert.equal(this.storage.removeItem.args[0][0], 'username');
-    assert.equal(this.storage.removeItem.args[1][0], 'password');
+    assert.equal(this.storage.removeItem.args[0][0], 'accessToken');
   });
 });
