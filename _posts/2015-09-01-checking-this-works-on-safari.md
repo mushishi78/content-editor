@@ -44,4 +44,4 @@ Let's do this, Safari Styley
 
 
 
-Can you handle this? Nope, nope this is bad!
+Can you handle this? Now it can.
