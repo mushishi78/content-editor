@@ -1,6 +1,8 @@
 Content Editor
 ==============
 
+[![Build Status](https://travis-ci.org/mushishi78/content-editor.svg?branch=master)](https://travis-ci.org/mushishi78/content-editor)
+
 Content Editor is a web interface for editing documents on GitHub. It allows content writers to create, edit, upload, move and delete files from a web browser, lowering the amount of technical knowledge required to manage files on GitHub.
 
 With the growth in popularity of static-site generators, it is often desirable to store content as simple text files alongside the code files that make up a website. This can present a problem for content writers, as code repositories typically use version control software to keep track of file changes which can be difficult to use and require a degree of technical know-how. By comparison, sites that use content management systems, i.e. that store content as data in a database, typically provide a web-based administration panel with a rich-text editor that is more accessible for most content authors.
