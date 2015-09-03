@@ -12,7 +12,6 @@ import thunk from 'redux-thunk';
 
 import * as reducers from './reducers/index';
 import App from './components/app';
-import { login } from './actions/index';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
