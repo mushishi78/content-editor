@@ -7,14 +7,14 @@ const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
 export default class PromptBar extends React.Component {
   setValue(e) { this.setState({ path: e.target.value }); }
-  handleKeyDown(e) { if(e.key === 'Enter') { this.submit(); } }
+  handleKeyDown(e) { if(e.key === 'Enter') { this.submit(this.props.prompt.path); } }
 
-  submit() {
+  submit(initialPath) {
     switch(this.state.type) {
       case CREATE:
         return this.props.create(this.state.path);
       case MOVE:
-        return this.props.move(this.props.prompt.path, this.state.path);
+        return this.props.move(initialPath, this.state.path);
     }
   }
 
@@ -34,16 +34,21 @@ export default class PromptBar extends React.Component {
       <ReactCSSTransitionGroup transitionName='bottom-bar'>
       {
         !this.props.prompt ? null :
-          <section style={styles.section} className='bottom-bar' key='bottom-bar'>
+          <section style={styles.section}
+                   className='bottom-bar'
+                   key='bottom-bar'
+                   onBlur={this.props.blur}
+                   tabIndex='1'>
+
             <input type='text'
                    style={styles.input}
                    value={this.state.path}
                    onChange={this.setValue.bind(this)}
                    ref='pathInput'
-                   onKeyDown={this.handleKeyDown.bind(this)}
-                   onBlur={this.props.blur}/>
+                   onKeyDown={this.handleKeyDown.bind(this)} />
 
-            <button style={styles.button} onClick={this.submit.bind(this)}>
+            <button style={styles.button}
+                    onClick={this.submit.bind(this, this.props.prompt.path)} >
               {this.props.prompt.type}
             </button>
           </section>
