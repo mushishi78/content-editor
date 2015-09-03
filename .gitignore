@@ -1,6 +1,3 @@
 node_modules
-public/content-editor*
-public/index.html
-public/200.html
-public/404.html
+public/app*
 .notes
