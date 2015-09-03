@@ -9,6 +9,8 @@ With the growth in popularity of static-site generators, it is often desirable t
 
 Content Editor tries to plug this gap by providing a user experience that is simple and responsive, whilst at the same time respecting the difference between these architectures. There are a plethora of static-site generators: Jekyll, Hexo, Hugo, Pelican, Middleman, Metalsmith, Harp, Docpad...etc each with their own ideas about the best ways to store content. By default, Content Editor simply provides a direct text editor for content without trying to be too clever with assumptions on how the files are formatted.
 
+[2 Minute Tour (Video)](https://www.youtube.com/watch?v=klnmrxJaXoM)
+
 Screenshots
 -----------
 
