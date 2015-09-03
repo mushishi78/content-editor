@@ -1,7 +1,7 @@
 import { CREATE, SET_LOCATION } from '../constants/action-types';
 import { OWNER, REPO, PATH } from '../constants/location-types';
 
-export default function location(state = {}, { type, href, path }) {
+export default function location(state = { href: '' }, { type, href, path }) {
   switch(type) {
     case SET_LOCATION:
       return split(href);

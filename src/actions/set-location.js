@@ -1,9 +1,9 @@
 import { SET_LOCATION } from '../constants/action-types';
 import _load from './load';
 
-export default function setLocation(href, load = _load) {
+export default function setLocation(href, load = _load, origin = location.origin) {
   return (dispatch, getState) => {
-  	href = normalize(href);
+  	href = normalize(href, origin);
 
     if(href !== getState().location.href) {
       dispatch({ type: SET_LOCATION, href });
@@ -13,6 +13,9 @@ export default function setLocation(href, load = _load) {
   }
 }
 
-function normalize(href) {
-  return href.split(/\/$/)[0] || '/';
+function normalize(href, origin) {
+	href = href.replace(origin, '');
+	href = decodeURIComponent(href);
+	href = href.replace(/\/$/, '') || '/';
+  return href;
 }

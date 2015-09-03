@@ -1,25 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Addressbar from 'react-addressbar';
 import * as actionCreators from '../actions/index';
 import { IN_PROGRESS } from '../constants/status-types';
 import ConfirmBar from '../components/confirm-bar';
 import ContentsViewer from '../components/contents-viewer';
 import FileEditor from '../components/file-editor';
 import FlashMessage from '../components/flash-message';
-import LocationBar from '../components/location-bar';
 import LoginModal from '../components/login-modal';
 import PromptBar from '../components/prompt-bar';
 import SaveBar from '../components/save-bar';
 import TopBar from '../components/top-bar';
 
 class App extends React.Component {
-  componentDidMount() { this.props.login(); }
+  constructor(props) {
+    super(props);
+    this.props.setLocation(window.location.pathname);
+    this.props.login();
+  }
+  componentWillReceiveProps(newProps) {
+    document.title = 'Content Editor ' + newProps.location.href;
+  }
   render() {
     return (
         <main>
-          <LocationBar href={this.props.location.href}
-                       setLocation={this.props.setLocation} />
-
+          <Addressbar onChange={this.props.setLocation} value={this.props.location.href} />
           <FlashMessage status={this.props.status} />
           {
             this.props.status.type === IN_PROGRESS ? <div className='loader' /> :
