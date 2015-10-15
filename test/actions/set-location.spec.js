@@ -17,8 +17,8 @@ describe('setLocation', function() {
   });
 
   it('dispatches nothing if location unchanged', function() {
-  	setLocation('/dgaer58/friKtion', this.load, origin)(this.dispatch, this.getState);
-  	assert(this.dispatch.notCalled);
+    setLocation('/dgaer58/friKtion', this.load, origin)(this.dispatch, this.getState);
+    assert(this.dispatch.notCalled);
   });
 
   it('dispatches and calls load if logged in', function() {

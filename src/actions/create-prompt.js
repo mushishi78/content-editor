@@ -7,5 +7,5 @@ export default function createPrompt() {
 }
 
 function createPath({ location: { path }}) {
-	return path ? path + '/' : '';
+  return path ? path + '/' : '';
 }

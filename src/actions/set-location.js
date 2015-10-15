@@ -3,7 +3,7 @@ import _load from './load';
 
 export default function setLocation(href, load = _load, origin = location.origin) {
   return (dispatch, getState) => {
-  	href = normalize(href, origin);
+    href = normalize(href, origin);
 
     if(href !== getState().location.href) {
       dispatch({ type: SET_LOCATION, href });
@@ -14,8 +14,8 @@ export default function setLocation(href, load = _load, origin = location.origin
 }
 
 function normalize(href, origin) {
-	href = href.replace(origin, '');
-	href = decodeURIComponent(href);
-	href = href.replace(/\/$/, '') || '/';
+  href = href.replace(origin, '');
+  href = decodeURIComponent(href);
+  href = href.replace(/\/$/, '') || '/';
   return href;
 }

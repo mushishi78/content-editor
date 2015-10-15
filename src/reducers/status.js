@@ -1,7 +1,7 @@
 import { IN_PROGRESS, COMPLETED, FAILED } from '../constants/status-types';
 
 export default function status(state = {}, { status, flash }) {
-	switch (status) {
+  switch (status) {
     case IN_PROGRESS:
     case COMPLETED:
     case FAILED:
